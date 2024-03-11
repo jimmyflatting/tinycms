@@ -4,7 +4,7 @@ Tinycms is a modifed Laravel/Breeze kit for quickly developing a CMS.
 
 ## Installation
 
-Requires PHP@8.1.2, Laravel@8.x, Node@20.11.1 (LTS), SQLite recommended for local development.
+Requires PHP@8.1.2, Laravel@8, Node@20.11.1 (LTS), SQLite recommended for local development.
 
 Installation with brew:
 ```bash
