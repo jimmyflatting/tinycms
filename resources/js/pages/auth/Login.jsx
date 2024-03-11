@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "@inertiajs/inertia-react";
+import Button from "@/components/Button";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -29,8 +30,8 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <div className="container h-[100vh]">
-            <div className="w-1/3 p-5 shadow-lg rounded-lg mx-auto">
+        <div className="container h-[100vh] flex justify-center items-center w-full">
+            <div className="w-full lg:w-1/2 p-5 shadow-lg rounded-lg">
                 <form onSubmit={submit}>
                     <div>
                         <label htmlFor="email">Email</label>
@@ -71,7 +72,7 @@ export default function Login({ status, canResetPassword }) {
                         </label>
                     </div>
 
-                    <div className="flex items-center justify-end mt-4">
+                    <div className="flex items-center justify-between mt-4">
                         <a
                             href="password-request"
                             className="underline text-sm text-gray-600 hover:text-gray-900"
@@ -79,13 +80,13 @@ export default function Login({ status, canResetPassword }) {
                             Glömt lösenord?
                         </a>
 
-                        <button
-                            type="submit"
-                            className="ml-4"
+                        <Button
+                            type={"submit"}
+                            className="test"
                             disabled={processing}
                         >
                             Logga in
-                        </button>
+                        </Button>
                     </div>
                 </form>
             </div>

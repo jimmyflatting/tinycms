@@ -25,6 +25,7 @@ Route::get('/admin', [AdminController::class, 'index'])->middleware(['auth', 've
 Route::get('/admin/login', function () {
     return Inertia::render('auth/Login');
 })->name('loginwp');
+Route::get('/admin/pages', [PageController::class, 'index'])->middleware(['auth', 'verified']);
 Route::get('/admin/{id}', [AdminController::class, 'show'])->middleware(['auth', 'verified']);
 
 Route::get('/{id}', [PageController::class, 'show']);

@@ -13,6 +13,7 @@ module.exports = {
         extend: {
             container: {
                 center: true,
+                padding: "1rem",
             },
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
