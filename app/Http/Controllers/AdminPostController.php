@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class AdminController extends Controller
+class AdminPostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,13 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return Inertia::render('admin/Index');
+		$posts = Post::with('category')->get();
+
+		foreach ($posts as $post) {
+			$post->formatted_updated_at = Carbon::parse($post->updated_at)->format('Y-m-d H:i');
+		}
+
+		return Inertia::render('admin/posts/Index', ['posts' => $posts]);
     }
 
     /**
@@ -24,7 +32,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+		return Inertia::render('admin/posts/Create');
     }
 
     /**
@@ -35,7 +43,12 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$slug = str_replace(['å', 'ä', 'ö'], ['a', 'a', 'o'], $request->title);
+		$slug = str_replace(' ', '-', strtolower($slug));
+		$request->merge(['slug' => $slug]);
+
+		Post::create($request->all());
+		return Inertia::location(route('admin.posts.index'));
     }
 
     /**
@@ -46,7 +59,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        return Inertia::render('admin/Pages');
+        //
     }
 
     /**
@@ -57,7 +70,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+		$page = Post::where('id', $id)->firstOrFail();
+
+		return Inertia::render('admin/posts/Edit', ['page' => $page]);
     }
 
     /**
@@ -69,7 +84,14 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+		$page = Post::where('id', $id)->firstOrFail();
+
+		$slug = str_replace(['å', 'ä', 'ö'], ['a', 'a', 'o'], $request->title);
+		$slug = str_replace(' ', '-', strtolower($slug));
+		$request->merge(['slug' => $slug]);
+
+		$page->update($request->all());
+		return Inertia::location(route('admin.posts.index'));
     }
 
     /**
@@ -80,6 +102,10 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+		$page = Post::findOrFail($id);
+
+		$page->delete();
+
+		return response()->json(['success' => true, 'message' => 'Post deleted successfully']);
     }
 }

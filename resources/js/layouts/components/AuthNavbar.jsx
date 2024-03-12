@@ -25,7 +25,17 @@ function AuthNavbar({ user }) {
         <>
             <nav className="border py-2">
                 <div className="container flex justify-between items-center">
-                    <div className="logo">Logo</div>
+                    <div className="logo">
+                        <Link href={route("admin.index")}>Logo</Link>
+                    </div>
+                    <div className="flex space-x-3">
+                        <Link href={route("admin.pages.index")}>Pages</Link>
+                        <Link href={route("admin.posts.index")}>Posts</Link>
+                        <Link href={route("admin.users.index")}>Users</Link>
+                        <Link href={route("admin.settings.index")}>
+                            Settings
+                        </Link>
+                    </div>
                     <div className="flex items-center space-x-5">
                         <p className="text-sm">
                             {greeting} {user.name}!

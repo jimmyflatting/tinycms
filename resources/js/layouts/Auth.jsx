@@ -6,7 +6,7 @@ export default function Auth({ user, children }) {
         <>
             <AuthNavbar user={user} />
             <div className="">
-                <main>
+                <main className="container">
                     <div>{children}</div>
                 </main>
             </div>

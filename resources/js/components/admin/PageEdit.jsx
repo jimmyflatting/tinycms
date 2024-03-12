@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useForm } from "@inertiajs/inertia-react";
+import { Link } from "@inertiajs/react";
 
-export default function PageList({ props }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        title: "",
-        content: "",
-        slug: "",
+export default function PageEdit({ props }) {
+    const { data, setData, put, processing, errors, reset } = useForm({
+        title: props.page.title,
+        content: props.page.content,
+        slug: props.page.slug,
     });
 
     const handleChange = (event) => {
@@ -15,10 +16,12 @@ export default function PageList({ props }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(data);
-        // post(route("page.store"));
+        put(route("admin.pages.update", props.page.id), {
+            onSuccess: () => {
+                console.log("success");
+            },
+        });
     };
-
-    console.log(data);
 
     return (
         <div className="container">
@@ -26,7 +29,7 @@ export default function PageList({ props }) {
                 <div className="space-y-12">
                     <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">
-                            Skapa ny sida
+                            Redigera sida
                         </h2>
 
                         <div className="space-y-8">
@@ -47,6 +50,7 @@ export default function PageList({ props }) {
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                             placeholder="Kontakta oss"
                                             onChange={handleChange}
+                                            defaultValue={props.page.title}
                                         />
                                     </div>
                                     <input
@@ -55,6 +59,9 @@ export default function PageList({ props }) {
                                         name="slug"
                                         value={data.title
                                             .toLowerCase()
+                                            .replace(/å/g, "a")
+                                            .replace(/ä/g, "a")
+                                            .replace(/ö/g, "o")
                                             .replace(/ /g, "-")}
                                         onChange={handleChange}
                                     />
@@ -62,6 +69,9 @@ export default function PageList({ props }) {
                                         localhost:3000/
                                         {data.title
                                             .toLowerCase()
+                                            .replace(/å/g, "a")
+                                            .replace(/ä/g, "a")
+                                            .replace(/ö/g, "o")
                                             .replace(/ /g, "-")}
                                     </span>
                                 </div>
@@ -80,7 +90,7 @@ export default function PageList({ props }) {
                                         name="content"
                                         rows={10}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        defaultValue={""}
+                                        defaultValue={props.page.content}
                                         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                         onChange={handleChange}
                                     />
@@ -92,12 +102,14 @@ export default function PageList({ props }) {
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                     <a href="">
-                        <button
+                        <Link
+                            href={route("admin.pages.index")}
+                            as="button"
                             type="button"
                             className="text-sm font-semibold leading-6 text-gray-900"
                         >
-                            Cancel
-                        </button>
+                            Avbryt
+                        </Link>
                     </a>
                     <button
                         type="submit"

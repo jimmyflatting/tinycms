@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class AdminController extends Controller
+class AdminSettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return Inertia::render('admin/Index');
+        //
     }
 
     /**
@@ -46,7 +45,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        return Inertia::render('admin/Pages');
+        //
     }
 
     /**

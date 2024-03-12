@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
-class AdminController extends Controller
+class AdminUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +17,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return Inertia::render('admin/Index');
+		$users = User::all();
+
+		return Inertia::render('admin/users/Index', ['users' => $users]);
     }
 
     /**
@@ -24,7 +29,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+		return Inertia::render('admin/users/Create');
     }
 
     /**
@@ -33,10 +38,19 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+	public function store(Request $request)
+	{
+		if (User::where('email', $request->email)->exists()) {
+			return response()->json(['success' => false, 'message' => 'Email already in use']);
+		}
+
+		$password = Hash::make($request->password);
+		$request->merge(['password' => $password]);
+
+		User::create($request->all());
+		return Inertia::location(route('admin.users.index'));
+	}
+
 
     /**
      * Display the specified resource.
@@ -46,7 +60,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        return Inertia::render('admin/Pages');
+        //
     }
 
     /**
@@ -57,7 +71,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+		$user = User::where('id', $id)->firstOrFail();
+
+		return Inertia::render('admin/users/Edit', ['user' => $user]);
     }
 
     /**
@@ -69,7 +85,10 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+		$user = User::where('id', $id)->firstOrFail();
+
+		$user->update($request->all());
+		return Inertia::location(route('admin.users.index'));
     }
 
     /**
@@ -80,6 +99,14 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+		$user = User::findOrFail($id);
+
+		if ($user->name == 'Peach') {
+			return response()->json(['success' => false, 'message' => 'You cannot delete this user']);
+		}
+
+		$user->delete();
+
+		return response()->json(['success' => true, 'message' => 'Post deleted successfully']);
     }
 }

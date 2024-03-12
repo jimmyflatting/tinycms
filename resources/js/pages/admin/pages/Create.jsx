@@ -1,10 +1,11 @@
+import PageForm from "@/components/admin/PageForm";
 import Auth from "@/layouts/Auth";
 import React from "react";
 
-export default function Admin({ ...props }) {
+export default function Create({ ...props }) {
     return (
         <Auth user={props.auth.user}>
-            <div>Admin</div>
+            <PageForm props={props} />
         </Auth>
     );
 }
