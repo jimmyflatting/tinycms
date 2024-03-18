@@ -26,9 +26,9 @@ return new class extends Migration
 		});
 
 		User::create([
-			'name' => 'Peach',
-			'email' => 'webb@gopeach.se',
-			'password' => Hash::make('kebabrulle'),
+			'name' => env('ADMIN_NAME', 'root'),
+			'email' => env('ADMIN_EMAIL', 'example@example.com'),
+			'password' => Hash::make(env('ADMIN_PASSWORD', 'password')),
 		]);
 
     }
