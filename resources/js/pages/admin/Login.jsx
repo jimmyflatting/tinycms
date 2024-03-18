@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "@inertiajs/inertia-react";
-import Button from "@/components/Button";
+import axios from "axios";
+import { redirect } from "react-router-dom";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,7 +16,7 @@ export default function Login({ status, canResetPassword }) {
         };
     }, []);
 
-    const handleInputChange = (event) => {
+    const onHandleChange = (event) => {
         setData(
             event.target.name,
             event.target.type === "checkbox"
@@ -26,8 +27,15 @@ export default function Login({ status, canResetPassword }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("login"));
+
+        post(route("login"), {
+            onSuccess: () => {
+                console.log("Welcome");
+            },
+        });
     };
+
+    console.log(data);
 
     return (
         <div className="container h-[100vh] flex justify-center items-center w-full">
@@ -42,7 +50,7 @@ export default function Login({ status, canResetPassword }) {
                             className="mt-1 block w-full"
                             autoComplete="username"
                             autoFocus
-                            onChange={handleInputChange}
+                            onChange={onHandleChange}
                         />
                     </div>
 
@@ -54,7 +62,7 @@ export default function Login({ status, canResetPassword }) {
                             value={data.password}
                             className="mt-1 block w-full"
                             autoComplete="current-password"
-                            onChange={handleInputChange}
+                            onChange={onHandleChange}
                         />
                     </div>
 
@@ -63,8 +71,9 @@ export default function Login({ status, canResetPassword }) {
                             <input
                                 type="checkbox"
                                 name="remember"
-                                checked={data.remember}
-                                onChange={handleInputChange}
+                                value={data.remember}
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                onChange={onHandleChange}
                             />
                             <span className="ml-2 text-sm text-gray-600">
                                 Kom ihåg mig
@@ -74,19 +83,13 @@ export default function Login({ status, canResetPassword }) {
 
                     <div className="flex items-center justify-between mt-4">
                         <a
-                            href="password-request"
+                            href={route("password.request")}
                             className="underline text-sm text-gray-600 hover:text-gray-900"
                         >
                             Glömt lösenord?
                         </a>
 
-                        <Button
-                            type={"submit"}
-                            className="test"
-                            disabled={processing}
-                        >
-                            Logga in
-                        </Button>
+                        <button type="submit">Logga in</button>
                     </div>
                 </form>
             </div>
