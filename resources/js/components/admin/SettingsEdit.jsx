@@ -37,7 +37,7 @@ export default function SettingsEdit({ props }) {
         heading_color: props.heading_color,
         instagram: props.instagram,
         link_color: props.link_color,
-        linked_in: props.linked_in,
+        linkedin: props.linkedin,
         overlay_color: props.overlay_color,
         phone: props.phone,
         primary_color: props.primary_color,
