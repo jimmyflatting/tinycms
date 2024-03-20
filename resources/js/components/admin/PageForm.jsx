@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/inertia-react";
+import PageBuilder from "../pagebuilder/PageBuilder";
 
 export default function PageForm({ props }) {
+    const [blocks, setBlocks] = useState([]);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         title: "",
         content: "",
         slug: "",
+        blocks: blocks,
     });
 
     const handleChange = (event) => {
@@ -21,6 +25,8 @@ export default function PageForm({ props }) {
             },
         });
     };
+
+    console.log(data);
 
     return (
         <div className="container">
@@ -76,23 +82,10 @@ export default function PageForm({ props }) {
                             </div>
 
                             <div className="col-span-full">
-                                <label
-                                    htmlFor="content"
-                                    className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                    Content
-                                </label>
-                                <div className="mt-2">
-                                    <textarea
-                                        id="content"
-                                        name="content"
-                                        rows={10}
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        defaultValue={""}
-                                        placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                        onChange={handleChange}
-                                    />
-                                </div>
+                                <PageBuilder
+                                    name="blocks"
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </div>

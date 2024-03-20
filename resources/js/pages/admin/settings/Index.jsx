@@ -1,5 +1,6 @@
 import SettingsEdit from "@/components/admin/SettingsEdit";
 import Auth from "@/layouts/Auth";
+import Card from "@/layouts/components/Card";
 import React from "react";
 
 export default function Index(...props) {
@@ -7,7 +8,9 @@ export default function Index(...props) {
 
     return (
         <Auth user={props[0].auth.user}>
-            <SettingsEdit props={settings} />
+            <Card>
+                <SettingsEdit props={settings} />
+            </Card>
         </Auth>
     );
 }

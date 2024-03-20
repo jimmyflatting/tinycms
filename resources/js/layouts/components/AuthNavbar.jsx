@@ -1,4 +1,5 @@
 import { Link } from "@inertiajs/react";
+import { Container } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 
@@ -14,17 +15,24 @@ function AuthNavbar({ user }) {
     let greeting;
 
     if (date < 10) {
-        greeting = "Godmorgon";
+        greeting = "Godmorgon,";
     } else if (date < 18) {
-        greeting = "God dag";
+        greeting = "God dag,";
     } else {
-        greeting = "Godkväll";
+        greeting = "Godkväll,";
     }
 
     return (
         <>
             <nav className="border py-2">
-                <div className="container flex justify-between items-center">
+                <Container
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignContent: "center",
+                        alignItems: "center",
+                    }}
+                >
                     <div className="logo">
                         <Link href={route("admin.index")}>Logo</Link>
                     </div>
@@ -48,7 +56,7 @@ function AuthNavbar({ user }) {
                             />
                         </div>
                     </div>
-                </div>
+                </Container>
             </nav>
 
             <div

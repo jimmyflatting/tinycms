@@ -24,7 +24,11 @@ export default function Edit({ ...props }) {
         });
     };
 
-    console.log(data);
+    const handleDelete = (id) => {
+        if (confirm("Är du säker på att du vill radera användaren?")) {
+            axios.delete(route("admin.users.destroy", id));
+        }
+    };
 
     return (
         <Auth user={props.auth.user}>
@@ -77,6 +81,7 @@ export default function Edit({ ...props }) {
                     {processing ? "Skapar användare..." : "Skapa användare"}
                 </button>
             </form>
+            <span onClick={handleDelete(props.user.id)}>I</span>
         </Auth>
     );
 }

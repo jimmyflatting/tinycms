@@ -105,7 +105,7 @@ class AdminPagesController extends Controller
 
 		$page->delete();
 
-		return response()->json(['success' => true, 'message' => 'Page deleted successfully']);
+		return Inertia::location(route('admin.pages.index'));
 	}
 
 }

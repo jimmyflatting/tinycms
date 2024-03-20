@@ -30,6 +30,6 @@ class AdminSettingsController extends Controller
 		$settings = Settings::first();
 		$settings->update($request->all());
 
-		return redirect()->route('admin.settings.index');
+		return Inertia::location(route('admin.settings.index'));
     }
 }

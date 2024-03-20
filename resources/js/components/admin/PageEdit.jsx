@@ -23,6 +23,12 @@ export default function PageEdit({ props }) {
         });
     };
 
+    const handleDelete = (id) => {
+        if (confirm("Är du säker på att du vill radera sidan?")) {
+            axios.delete(route("admin.pages.destroy", id));
+        }
+    };
+
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -100,8 +106,18 @@ export default function PageEdit({ props }) {
                     </div>
                 </div>
 
-                <div className="mt-6 flex items-center justify-end gap-x-6">
-                    <a href="">
+                <div className="mt-6 flex items-center justify-between">
+                    <div className="justify-start">
+                        <Link
+                            onClick={() => handleDelete(props.page.id)}
+                            as="button"
+                            type="button"
+                            className="text-sm font-semibold leading-6 text-gray-900"
+                        >
+                            Delete
+                        </Link>
+                    </div>
+                    <div className="justify-end space-x-4">
                         <Link
                             href={route("admin.pages.index")}
                             as="button"
@@ -110,13 +126,14 @@ export default function PageEdit({ props }) {
                         >
                             Avbryt
                         </Link>
-                    </a>
-                    <button
-                        type="submit"
-                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        Spara
-                    </button>
+
+                        <button
+                            type="submit"
+                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                            Spara
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

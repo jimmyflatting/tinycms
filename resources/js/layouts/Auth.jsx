@@ -1,17 +1,14 @@
 import React from "react";
-import AuthNavbar from "./components/AuthNavbar";
+import AuthMenu from "./components/AuthMenu";
+import { useState } from "react";
 
 export default function Auth({ user, children }) {
     return (
         <>
-            <AuthNavbar user={user} />
-            <div className="">
-                <main className="container">
-                    <div>{children}</div>
-                </main>
+            <div className="flex bg-gray-50">
+                <AuthMenu />
+                <main className="container mt-8">{children}</main>
             </div>
-
-            <div className="AuthFooter">AuthFooter</div>
         </>
     );
 }
