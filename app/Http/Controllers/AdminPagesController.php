@@ -20,6 +20,7 @@ class AdminPagesController extends Controller
 
 		foreach ($pages as $page) {
 			$page->formatted_updated_at = Carbon::parse($page->updated_at)->format('Y-m-d H:i');
+			$page->content = json_decode($page->content, true);
 		}
 
 		return Inertia::render('admin/pages/Index', ['pages' => $pages]);
@@ -41,16 +42,26 @@ class AdminPagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+	public function store(Request $request)
+	{
 
-		$slug = str_replace(['å', 'ä', 'ö'], ['a', 'a', 'o'], $request->title);
-		$slug = str_replace(' ', '-', strtolower($slug));
-		$request->merge(['slug' => $slug]);
+		// convert block data to json
+		$request->merge(['content' => json_encode($request->content)]);
 
-        Page::create($request->all());
+		// validate the request
+		$validatedData = $request->validate([
+			'title' => 'required|string|max:255',
+			'slug' => 'required|string|unique:pages,slug|max:255',
+			'content' => 'required|json',
+			'status' => 'required|string|max:255',
+		]);
+
+		// create a new page with validated data
+		Page::create($validatedData);
+
+		// redirect to the index page
 		return Inertia::location(route('admin.pages.index'));
-    }
+	}
 
 	/**
 	 * Show the form for editing the specified resource.

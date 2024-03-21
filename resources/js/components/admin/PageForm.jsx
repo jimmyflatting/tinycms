@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "@inertiajs/inertia-react";
+import { Inertia } from "@inertiajs/inertia";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { TiDelete } from "react-icons/ti";
 import TextBlock from "../pagebuilder/TextBlock";
 import ImageBlock from "../pagebuilder/ImageBlock";
 import SliderBlock from "../pagebuilder/SliderBlock";
-import WysiwygBlock from "../pagebuilder/WysiwygBlock";
+import AiBlock from "../pagebuilder/AiBlock";
 
 const PageForm = () => {
     const [blocks, setBlocks] = useState([]);
@@ -13,16 +14,12 @@ const PageForm = () => {
     const [slug, setSlug] = useState("");
     const [selectedBlockType, setSelectedBlockType] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("published");
-    let data = {
-        title: title,
-        slug: slug,
-        blocks: blocks,
-    };
 
-    const { post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         title: title,
         slug: slug,
-        blocks: blocks,
+        content: blocks,
+        status: selectedStatus,
     });
 
     const addBlock = (type) => {
@@ -35,6 +32,12 @@ const PageForm = () => {
     const removeBlock = (id) => {
         const updatedBlocks = blocks.filter((block) => block.id !== id);
         setBlocks(updatedBlocks);
+        setData({
+            title: title,
+            slug: slug,
+            content: blocks,
+            status: selectedStatus,
+        });
     };
 
     const handleTitleChange = (e) => {
@@ -47,6 +50,13 @@ const PageForm = () => {
             .replace(/ö/g, "o")
             .replace(/ /g, "-");
         setSlug(newSlug);
+
+        setData({
+            title: e.target.value,
+            slug: newSlug,
+            content: blocks,
+            status: selectedStatus,
+        });
     };
 
     const handleBlockDataChange = (blockId, data) => {
@@ -54,6 +64,12 @@ const PageForm = () => {
             block.id === blockId ? { ...block, data } : block
         );
         setBlocks(updatedBlocks);
+        setData({
+            title: title,
+            slug: slug,
+            content: updatedBlocks,
+            status: selectedStatus,
+        });
     };
 
     const handleBlockTypeChange = (e) => {
@@ -63,11 +79,17 @@ const PageForm = () => {
 
     const handleStatusChange = (e) => {
         setSelectedStatus(e.target.value);
+        setData({
+            title: title,
+            slug: slug,
+            content: blocks,
+            status: e.target.value,
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("form.submit"));
+        post(route("admin.pages.store"));
     };
 
     const renderBlockComponent = (block) => {
@@ -96,15 +118,14 @@ const PageForm = () => {
                         onDataChange={handleBlockDataChange}
                     />
                 );
-            case "WYSIWYG":
+            case "ai_block":
                 return (
-                    <WysiwygBlock
+                    <AiBlock
                         key={block.id}
                         id={block.id}
                         onDataChange={handleBlockDataChange}
                     />
                 );
-
             default:
                 return null;
         }
@@ -132,13 +153,14 @@ const PageForm = () => {
                 <div className="flex justify-between mb-5 space-x-10">
                     <div className="flex flex-col w-full">
                         <input
-                            className="w-full border p-2 rounded-lg"
+                            className="w-full border p-2 rounded-lg mb-2"
                             type="text"
                             value={title}
                             onChange={handleTitleChange}
                             placeholder="Kontakta oss"
                         />
-                        <span>localhost:8000/{slug}</span>
+
+                        <span className="text-sm">localhost:8000/{slug}</span>
                     </div>
                     <div className="flex flex-row space-x-5">
                         <select
@@ -152,8 +174,9 @@ const PageForm = () => {
                         <button
                             className="relative flex items-center justify-start bg-slate-500 hover:bg-gray-200 shadow-md text-white w-full h-10 mx-auto px-3 text-center mb-5 rounded-lg transition ease-in-out duration-150 space-x-2"
                             type="submit"
+                            disabled={processing}
                         >
-                            Spara
+                            {processing ? "Sparar..." : "Spara"}
                         </button>
                     </div>
                 </div>
@@ -219,10 +242,10 @@ const PageForm = () => {
                         onChange={handleBlockTypeChange}
                     >
                         <option value="">Lägg till block</option>
+                        <option value="slider">Slider Block</option>
                         <option value="text">Text Block</option>
                         <option value="image">Image Block</option>
-                        <option value="slider">Slider Block</option>
-                        <option value="WYSIWYG">WYSIWYG Block</option>
+                        <option value="ai_block">AI Block</option>
                     </select>
                 </div>
             </form>

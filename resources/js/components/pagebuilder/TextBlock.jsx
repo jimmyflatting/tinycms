@@ -1,31 +1,100 @@
-import React, { useState } from "react";
+import React, {
+    useRef,
+    useState,
+    forwardRef,
+    useEffect,
+    useLayoutEffect,
+} from "react";
+import Quill from "quill";
+import "react-quill/dist/quill.snow.css";
+import { set } from "lodash";
 
-const TextBlock = ({ id, onDataChange }) => {
+const Delta = Quill.import("delta");
+
+const toolbarOptions = [
+    [{ header: ["1", "2", "3", false] }],
+    ["bold", "italic", "underline"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ align: [] }],
+    ["link"],
+    ["clean"],
+];
+
+export default function TextBlock({ id, onDataChange }) {
     const [values, setValues] = useState({
         text: "",
     });
+    const [range, setRange] = useState();
+    const [lastChange, setLastChange] = useState();
+    const [readOnly, setReadOnly] = useState(false);
 
-    const handleChange = (e) => {
-        const key = e.target.name;
-        const value = e.target.value;
+    const quillRef = useRef();
+
+    const handleTextChange = (text) => {
         setValues((prevValues) => ({
             ...prevValues,
-            [key]: value,
+            text: text,
         }));
 
-        onDataChange(id, { ...values, [key]: value });
+        onDataChange(id, { text: text }); // Pass updated text directly
     };
 
     return (
-        <div className="block-wrapper flex flex-col">
-            <textarea
-                name="text"
-                onChange={handleChange}
-                rows={10}
-                className="border rounded-lg p-2 w-full"
-            ></textarea>
-        </div>
+        <Editor
+            ref={quillRef}
+            readOnly={readOnly}
+            onSelectionChange={setRange}
+            onTextChange={handleTextChange}
+        />
     );
-};
+}
 
-export default TextBlock;
+const Editor = forwardRef(
+    ({ readOnly, defaultValue, onTextChange, onSelectionChange }, ref) => {
+        const containerRef = useRef(null);
+        const defaultValueRef = useRef(defaultValue);
+        const onTextChangeRef = useRef(onTextChange);
+        const onSelectionChangeRef = useRef(onSelectionChange);
+
+        useLayoutEffect(() => {
+            onTextChangeRef.current = onTextChange;
+            onSelectionChangeRef.current = onSelectionChange;
+        });
+
+        useEffect(() => {
+            const container = containerRef.current;
+            const editorContainer = container.appendChild(
+                container.ownerDocument.createElement("div")
+            );
+            const quill = new Quill(editorContainer, {
+                theme: "snow",
+                modules: {
+                    toolbar: toolbarOptions,
+                },
+            });
+
+            ref.current = quill;
+
+            if (defaultValueRef.current) {
+                quill.setContents(defaultValueRef.current);
+            }
+
+            quill.on(Quill.events.TEXT_CHANGE, (...args) => {
+                onTextChangeRef.current?.(quill.root.innerHTML);
+            });
+
+            quill.on(Quill.events.SELECTION_CHANGE, (...args) => {
+                onSelectionChangeRef.current?.(...args);
+            });
+
+            return () => {
+                ref.current = null;
+                container.innerHTML = "";
+            };
+        }, [ref]);
+
+        return <div className="editor-wrapper" ref={containerRef}></div>;
+    }
+);
+
+Editor.displayName = "Editor";

@@ -32,7 +32,7 @@ export default function PagesTable({ props }) {
                             <p>{page.title}</p>
                         </td>
                         <td>
-                            <p>Published</p>
+                            <p>{page.status}</p>
                         </td>
                         <td className="text-end">
                             <Link

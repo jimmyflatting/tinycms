@@ -5,6 +5,7 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@gradio/client": "^0.14.0",
         "@headlessui/react": "^1.4.2",
         "@inertiajs/react": "^1.0.0",
         "@tailwindcss/forms": "^0.5.3",
@@ -32,6 +33,7 @@
         "react-color": "^2.19.3",
         "react-google-recaptcha": "^3.1.0",
         "react-icons": "^5.0.1",
+        "react-quill": "^2.0.0",
         "react-router-hash-link": "^2.4.3"
     }
 }

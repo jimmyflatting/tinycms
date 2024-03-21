@@ -18,14 +18,31 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('content');
+            $table->json('content');
+			$table->string('status');
             $table->timestamps();
         });
 
 		Page::create([
 			'title' => 'Startsida',
 			'slug' => '/',
-			'content' => '<h1>Hello kiwwwi</h1>',
+			'status' => 'published',
+			'content' => json_encode([
+				'blocks' => [
+					[
+						'type' => 'header',
+						'data' => [
+							'text' => 'Välkommen till startsidan'
+						]
+					],
+					[
+						'type' => 'paragraph',
+						'data' => [
+							'text' => 'Det här är startsidan.'
+						]
+					]
+				]
+			])
 		]);
 
     }
