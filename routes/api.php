@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,7 @@ Route::get('/api/scripts', function () {
 
 	return json_encode($scripts);
 });
+
+
+Route::post('/upload', [UploadController::class, 'upload']);
+Route::post('/remove-image', [UploadController::class, 'removeImage']);
