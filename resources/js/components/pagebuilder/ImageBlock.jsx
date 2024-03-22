@@ -7,7 +7,6 @@ const ImageBlock = ({ id, onDataChange }) => {
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setFile(selectedFile);
-        // You can upload the file here
         uploadFile(selectedFile);
     };
 
@@ -30,7 +29,6 @@ const ImageBlock = ({ id, onDataChange }) => {
     };
 
     const removeImage = () => {
-        // Send a request to your backend to delete the image file
         fetch("/api/remove-image", {
             method: "POST",
             body: JSON.stringify({ imageUrl }),

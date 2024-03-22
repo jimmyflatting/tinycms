@@ -7,6 +7,7 @@ import TextBlock from "../pagebuilder/TextBlock";
 import ImageBlock from "../pagebuilder/ImageBlock";
 import SliderBlock from "../pagebuilder/SliderBlock";
 import AiBlock from "../pagebuilder/AiBlock";
+import HeroBlock from "../pagebuilder/HeroBlock";
 
 const PageForm = () => {
     const [blocks, setBlocks] = useState([]);
@@ -121,6 +122,14 @@ const PageForm = () => {
             case "ai_block":
                 return (
                     <AiBlock
+                        key={block.id}
+                        id={block.id}
+                        onDataChange={handleBlockDataChange}
+                    />
+                );
+            case "hero_block":
+                return (
+                    <HeroBlock
                         key={block.id}
                         id={block.id}
                         onDataChange={handleBlockDataChange}
@@ -242,6 +251,7 @@ const PageForm = () => {
                         onChange={handleBlockTypeChange}
                     >
                         <option value="">Lägg till block</option>
+                        <option value="hero_block">Hero Block</option>
                         <option value="slider">Slider Block</option>
                         <option value="text">Text Block</option>
                         <option value="image">Image Block</option>
