@@ -101,12 +101,8 @@ export default function HeroBlock({ id, onDataChange }) {
 
     const imagePreview = (imgUrl) => {
         return (
-            <div className="w-1/2 justify-end">
-                <img
-                    className="max-w-full rounded-lg"
-                    src={imgUrl}
-                    alt="Uploaded"
-                />
+            <div className="justify-end">
+                <img className=" rounded-lg" src={imgUrl} alt="Uploaded" />
                 <button type="button" onClick={removeImage}>
                     Remove Image
                 </button>
@@ -173,8 +169,8 @@ export default function HeroBlock({ id, onDataChange }) {
                 </div>
             </div>
             {/* PREVIEW SECTION */}
-            <div className="">
-                <HeroComponent props={values} />
+            <div className="max-w-fit">
+                {/* <HeroComponent props={values} /> TODO MAX-W FIX */}
             </div>
         </>
     );
