@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\GoogleAnalyticsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::get('/api/scripts', function () {
 
 	return json_encode($scripts);
 });
+
+Route::get('/analytics', [GoogleAnalyticsController::class, 'index']);
 
 
 Route::post('/upload', [UploadController::class, 'upload']);
