@@ -21,8 +21,6 @@ export default function Pages({ nDaysAgo }) {
         fetchData();
     }, [nDaysAgo]);
 
-    console.log(data);
-
     return (
         <div className="">
             <h2 className="text-lg font-bold border-b mb-3">
