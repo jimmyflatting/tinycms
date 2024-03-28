@@ -1,30 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 
-export const datatest = {
-    labels: ["Mobile", "Desktop", "Tablet"],
-    datasets: [
-        {
-            label: "Besökare från enhet",
-            data: [12, 19, 3],
-            backgroundColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-            ],
-            borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-            ],
-            borderWidth: 1,
-        },
-    ],
-};
-
-export default function Devices({ nDaysAgo }) {
+const Devices = ({ nDaysAgo }) => {
     const [data, setData] = useState([]);
+
+    const Capitalize = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    };
 
     const fetchData = async () => {
         try {
@@ -33,8 +16,8 @@ export default function Devices({ nDaysAgo }) {
                     nDaysAgo +
                     "&dimension=deviceCategory&metric=sessions"
             );
-            const data = await response.json();
-            setData(data);
+            const responseData = await response.json();
+            setData(responseData.slice(0, 3)); // skipa allt som inte är mobil, dekstop eller tablet
         } catch (error) {
             console.error("Error fetching analytics data:", error);
         }
@@ -42,14 +25,63 @@ export default function Devices({ nDaysAgo }) {
 
     useEffect(() => {
         fetchData();
-    }, []);
-    console.log(data);
+    }, [nDaysAgo]);
 
     ChartJS.register(ArcElement, Tooltip);
 
+    const prepareChartData = () => {
+        const labels = [];
+        const dataValues = [];
+        const backgroundColors = [];
+        const borderColors = [];
+
+        const colors = [
+            "rgba(255, 0, 0, 1)", // RÖD
+            "rgba(0, 255, 0, 1)", // GRÖN
+            "rgba(0, 0, 255, 1)", // BLÅ
+        ];
+
+        data.forEach((item, index) => {
+            labels.push(Capitalize(item.dimension));
+            dataValues.push(parseInt(item.metric));
+            if (index < colors.length) {
+                backgroundColors.push(colors[index]);
+                borderColors.push(colors[index]);
+            } else {
+                backgroundColors.push(
+                    `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+                        Math.random() * 256
+                    )}, ${Math.floor(Math.random() * 256)}, 1)`
+                );
+                borderColors.push(
+                    `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+                        Math.random() * 256
+                    )}, ${Math.floor(Math.random() * 256)}, 1)`
+                );
+            }
+        });
+
+        const chartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Besökare från enhet",
+                    data: dataValues,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1,
+                },
+            ],
+        };
+
+        return chartData;
+    };
+
     return (
         <div>
-            <Doughnut data={datatest} />
+            <Doughnut data={prepareChartData()} />
         </div>
     );
-}
+};
+
+export default Devices;

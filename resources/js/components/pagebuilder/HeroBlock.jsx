@@ -170,7 +170,7 @@ export default function HeroBlock({ id, onDataChange }) {
             </div>
             {/* PREVIEW SECTION */}
             <div className="max-w-fit">
-                {/* <HeroComponent props={values} /> TODO MAX-W FIX */}
+                <HeroComponent props={values} />
             </div>
         </>
     );

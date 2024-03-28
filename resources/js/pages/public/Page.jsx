@@ -10,7 +10,9 @@ export default function Page({ ...props }) {
     const renderBlockComponent = (block) => {
         switch (block.type) {
             case "slider":
-                return <SliderComponent key={block.id} props={block.data} />;
+                return (
+                    <SliderComponent key={block.id} props={block.data.images} />
+                );
             case "text":
                 return <TextComponent key={block.id} props={block.data} />;
             default:

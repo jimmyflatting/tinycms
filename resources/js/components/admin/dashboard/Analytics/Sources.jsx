@@ -20,6 +20,6 @@ export default function Sources({ nDaysAgo }) {
     useEffect(() => {
         fetchData();
     }, []);
-    console.log(data);
+    // console.log(data);
     return <div>Sources</div>;
 }
