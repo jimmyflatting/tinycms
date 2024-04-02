@@ -16,25 +16,34 @@ export default function PagesTable({ props }) {
         }
     };
 
+    const Capitalize = (str) => {
+        if (str === "published") {
+            str = "Publicerad";
+        } else if (str === "draft") {
+            str = "Utkast";
+        }
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
     return (
         <table className="table-auto w-full">
             <thead>
                 <tr>
-                    <th className="text-start">Sidnamn</th>
+                    <th className="text-start pl-5">Sidnamn</th>
                     <th className="text-start">Status</th>
-                    <th className="text-end">Redigera</th>
+                    <th className="text-end pr-5">Redigera</th>
                 </tr>
             </thead>
             <tbody>
-                {pages.map((page) => (
-                    <tr key={page.id} className="odd:bg-gray-100">
-                        <td>
+                {pages.map((page, idx) => (
+                    <tr key={page.id} className={`odd:bg-gray-100`}>
+                        <td className="pl-5">
                             <p>{page.title}</p>
                         </td>
                         <td>
-                            <p>{page.status}</p>
+                            <p>{Capitalize(page.status)}</p>
                         </td>
-                        <td className="text-end">
+                        <td className="text-end pr-5">
                             <Link
                                 href={route("admin.pages.edit", page.id)}
                                 as="button"
