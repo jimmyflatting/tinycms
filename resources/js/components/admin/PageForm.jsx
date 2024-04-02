@@ -8,6 +8,8 @@ import ImageBlock from "../pagebuilder/ImageBlock";
 import SliderBlock from "../pagebuilder/SliderBlock";
 import AiBlock from "../pagebuilder/AiBlock";
 import HeroBlock from "../pagebuilder/HeroBlock";
+import TextImageBlock from "../pagebuilder/TextImageBlock";
+import AccordionBlock from "../pagebuilder/AccordionBlock";
 
 const PageForm = () => {
     const [blocks, setBlocks] = useState([]);
@@ -135,6 +137,22 @@ const PageForm = () => {
                         onDataChange={handleBlockDataChange}
                     />
                 );
+            case "text_image":
+                return (
+                    <TextImageBlock
+                        key={block.id}
+                        id={block.id}
+                        onDataChange={handleBlockDataChange}
+                    />
+                );
+            case "accordion":
+                return (
+                    <AccordionBlock
+                        key={block.id}
+                        id={block.id}
+                        onDataChange={handleBlockDataChange}
+                    />
+                );
             default:
                 return null;
         }
@@ -256,6 +274,8 @@ const PageForm = () => {
                         <option value="text">Text Block</option>
                         <option value="image">Image Block</option>
                         <option value="ai_block">AI Block</option>
+                        <option value="text_image">Text & Bild</option>
+                        <option value="accordion">Accordion</option>
                     </select>
                 </div>
             </form>
