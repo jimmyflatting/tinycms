@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\GoogleAnalyticsController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::get('/api/scripts', function () {
 });
 
 Route::get('/analytics', [GoogleAnalyticsController::class, 'index']);
+Route::get('/posts/categories', [CategoryController::class, 'index']);
 
 
 Route::post('/upload', [UploadController::class, 'upload']);

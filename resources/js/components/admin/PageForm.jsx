@@ -10,6 +10,7 @@ import AiBlock from "../pagebuilder/AiBlock";
 import HeroBlock from "../pagebuilder/HeroBlock";
 import TextImageBlock from "../pagebuilder/TextImageBlock";
 import AccordionBlock from "../pagebuilder/AccordionBlock";
+import CaseBlock from "../pagebuilder/CaseBlock";
 
 const PageForm = () => {
     const [blocks, setBlocks] = useState([]);
@@ -153,6 +154,15 @@ const PageForm = () => {
                         onDataChange={handleBlockDataChange}
                     />
                 );
+            case "cases":
+                return (
+                    <CaseBlock
+                        key={block.id}
+                        id={block.id}
+                        onDataChange={handleBlockDataChange}
+                        categories={["category1", "category2", "category3"]}
+                    />
+                );
             default:
                 return null;
         }
@@ -277,6 +287,7 @@ const PageForm = () => {
                         <option value="ai_block">AI Block</option>
                         <option value="text_image">Text & Bild</option>
                         <option value="accordion">Accordion</option>
+                        <option value="cases">Cases</option>
                     </select>
                 </div>
             </form>
