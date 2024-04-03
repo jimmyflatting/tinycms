@@ -229,13 +229,14 @@ const PageForm = () => {
                                                     {...provided.dragHandleProps}
                                                     className="block-wrapper border p-3 mb-3 rounded-lg shadow-sm"
                                                 >
-                                                    <div className="flex flex-row justify-between">
-                                                        <p>
+                                                    <div className="flex flex-row justify-between mb-5">
+                                                        <p className="text-lg font-semibold my-auto">
                                                             {Capitalize(
                                                                 block.type
                                                             )}
                                                         </p>
                                                         <button
+                                                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
                                                             type="button"
                                                             onClick={() =>
                                                                 removeBlock(
@@ -243,7 +244,7 @@ const PageForm = () => {
                                                                 )
                                                             }
                                                         >
-                                                            <TiDelete className="w-6 h-6" />
+                                                            Ta bort block
                                                         </button>
                                                     </div>
                                                     {renderBlockComponent(
