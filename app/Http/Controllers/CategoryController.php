@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Category;
+use App\Models\Post;
 class CategoryController extends Controller
 {
     /**
@@ -13,72 +14,27 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return \App\Models\Category::all();
+        return Category::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+	public function getPosts($cat_id) {
+		$posts = Post::where('category_id', $cat_id)->get();
+		return $posts;
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	public function getPostsByCategoryName($cat_name) {
+		$cat = Category::where('category_name', $cat_name)->first();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+		if(!$cat) {
+			return response()->json(['error' => 'Category not found'], 404);
+		}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+		$posts = Post::where('category_id', $cat->id)->get();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+		if (!$posts) {
+			return response()->json(['error' => 'No posts found for this category'], 404);
+		}
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+		return $posts;
+	}
 }

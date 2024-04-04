@@ -1,9 +1,11 @@
+import Card from "@/layouts/components/Card";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 export default function CaseBlock({ id, onDataChange }) {
     const [categories, setCategories] = useState([]);
     const [values, setValues] = useState("");
+    const [loadingPosts, setLoadingPosts] = useState(false);
 
     useEffect(() => {
         axios
@@ -22,11 +24,9 @@ export default function CaseBlock({ id, onDataChange }) {
         onDataChange(id, selectedValue);
     };
 
-    console.log(categories);
-
     return (
         <>
-            <div>
+            <div className="mb-5">
                 <select
                     value={values}
                     onChange={handleChange}
@@ -40,6 +40,38 @@ export default function CaseBlock({ id, onDataChange }) {
                     ))}
                 </select>
             </div>
+
+            {/* Display selected category */}
+            {values && <CasesPreview id={values} />}
+            {loadingPosts && <p>Loading posts...</p>}
         </>
+    );
+}
+
+function CasesPreview({ id }) {
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`/api/posts/category/name/${id}`)
+            .then((response) => {
+                setPosts(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching posts:", error);
+            });
+    }, [id]);
+
+    return (
+        <div>
+            {posts.map((post, idx) => (
+                <div key={idx}>
+                    <Card>
+                        <h2 className="text-xl">{post.title}</h2>
+                        <p>{post.content}</p>
+                    </Card>
+                </div>
+            ))}
+        </div>
     );
 }

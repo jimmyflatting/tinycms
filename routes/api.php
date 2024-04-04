@@ -30,6 +30,8 @@ Route::get('/api/scripts', function () {
 
 Route::get('/analytics', [GoogleAnalyticsController::class, 'index']);
 Route::get('/posts/categories', [CategoryController::class, 'index']);
+Route::get('/posts/category/{cat_id}', [CategoryController::class, 'getPosts']);
+Route::get('/posts/category/name/{cat_name}', [CategoryController::class, 'getPostsByCategoryName']);
 
 
 Route::post('/upload', [UploadController::class, 'upload']);
