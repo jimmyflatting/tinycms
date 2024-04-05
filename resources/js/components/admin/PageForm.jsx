@@ -11,8 +11,11 @@ import HeroBlock from "../pagebuilder/HeroBlock";
 import TextImageBlock from "../pagebuilder/TextImageBlock";
 import AccordionBlock from "../pagebuilder/AccordionBlock";
 import CaseBlock from "../pagebuilder/CaseBlock";
+import MapBlock from "../pagebuilder/MapBlock";
+import EventBlock from "../pagebuilder/EventBlock";
+import MenuBlock from "../pagebuilder/MenuBlock";
 
-const PageForm = () => {
+const PageForm = ({ props }) => {
     const [blocks, setBlocks] = useState([]);
     const [title, setTitle] = useState("");
     const [slug, setSlug] = useState("");
@@ -25,6 +28,8 @@ const PageForm = () => {
         content: blocks,
         status: selectedStatus,
     });
+
+    console.log(data);
 
     const addBlock = (type) => {
         if (type === "") return;
@@ -120,6 +125,7 @@ const PageForm = () => {
                         key={block.id}
                         id={block.id}
                         onDataChange={handleBlockDataChange}
+                        images={["image1", "image2", "image3"]}
                     />
                 );
             case "ai_block":
@@ -160,7 +166,30 @@ const PageForm = () => {
                         key={block.id}
                         id={block.id}
                         onDataChange={handleBlockDataChange}
-                        categories={["category1", "category2", "category3"]}
+                    />
+                );
+            case "map":
+                return (
+                    <MapBlock
+                        key={block.id}
+                        id={block.id}
+                        onDataChange={handleBlockDataChange}
+                    />
+                );
+            case "event":
+                return (
+                    <EventBlock
+                        key={block.id}
+                        id={block.id}
+                        onDataChange={handleBlockDataChange}
+                    />
+                );
+            case "menu":
+                return (
+                    <MenuBlock
+                        key={block.id}
+                        id={block.id}
+                        onDataChange={handleBlockDataChange}
                     />
                 );
             default:
@@ -182,8 +211,6 @@ const PageForm = () => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
 
-    console.log(data);
-
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -197,7 +224,9 @@ const PageForm = () => {
                             placeholder="Kontakta oss"
                         />
 
-                        <span className="text-sm">localhost:8000/{slug}</span>
+                        <span className="text-sm">
+                            {props.ziggy.url}/{slug}
+                        </span>
                     </div>
                     <div className="flex flex-row space-x-5">
                         <select
@@ -288,6 +317,9 @@ const PageForm = () => {
                         <option value="text_image">Text & Bild</option>
                         <option value="accordion">Accordion</option>
                         <option value="cases">Cases</option>
+                        <option value="map">Karta</option>
+                        <option value="event">Event</option>
+                        <option value="menu">Matmeny</option>
                     </select>
                 </div>
             </form>
