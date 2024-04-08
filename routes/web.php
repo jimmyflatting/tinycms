@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\StaffController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -57,6 +58,15 @@ Route::prefix('admin/users')->middleware(['auth', 'verified'])->group(function (
 	Route::get('/{id}', [AdminUserController::class, 'edit'])->name('admin.users.edit');
 	Route::put('/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
 	Route::delete('/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+});
+
+Route::prefix('admin/staff')->middleware(['auth', 'verified'])->group(function () {
+	Route::get('/', [StaffController::class, 'index'])->name('admin.staff.index');
+	Route::get('/create', [StaffController::class, 'create'])->name('admin.staff.create');
+	Route::post('/create', [StaffController::class, 'store'])->name('admin.staff.store');
+	Route::get('/{id}', [StaffController::class, 'edit'])->name('admin.staff.edit');
+	Route::put('/{id}', [StaffController::class, 'update'])->name('admin.staff.update');
+	Route::delete('/{id}', [StaffController::class, 'destroy'])->name('admin.staff.destroy');
 });
 
 Route::prefix('admin/settings')->middleware(['auth', 'verified'])->group(function () {

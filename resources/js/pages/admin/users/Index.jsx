@@ -18,6 +18,7 @@ export default function Index({ ...props }) {
                     <Link
                         href={route("admin.users.create")}
                         as="button"
+                        role="button"
                         className="flex flex-row space-x-3 bg-gray-200 hover:bg-gray-50 shadow-md text-gray-700 md:w-16 md:h-16 rounded-lg transition ease-in-out duration-150 px-5"
                     >
                         <IoCreate className="mx-auto my-auto scale-125" />
@@ -54,7 +55,7 @@ export default function Index({ ...props }) {
                                             "admin.users.edit",
                                             user.id
                                         )}
-                                        as="button"
+                                        role="button"
                                     >
                                         Edit
                                     </Link>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\GoogleAnalyticsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PersonalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,9 @@ Route::get('/analytics', [GoogleAnalyticsController::class, 'index']);
 Route::get('/posts/categories', [CategoryController::class, 'index']);
 Route::get('/posts/category/{cat_id}', [CategoryController::class, 'getPosts']);
 Route::get('/posts/category/name/{cat_name}', [CategoryController::class, 'getPostsByCategoryName']);
+
+Route::get('/staff', [PersonalController::class, 'index']);
+Route::get('/staff/{id}', [PersonalController::class, 'show']);
 
 
 Route::post('/upload', [UploadController::class, 'upload']);

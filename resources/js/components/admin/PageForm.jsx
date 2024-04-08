@@ -14,6 +14,7 @@ import CaseBlock from "../pagebuilder/CaseBlock";
 import MapBlock from "../pagebuilder/MapBlock";
 import EventBlock from "../pagebuilder/EventBlock";
 import MenuBlock from "../pagebuilder/MenuBlock";
+import StaffBlock from "../pagebuilder/StaffBlock";
 
 const PageForm = ({ props }) => {
     const [blocks, setBlocks] = useState([]);
@@ -192,6 +193,14 @@ const PageForm = ({ props }) => {
                         onDataChange={handleBlockDataChange}
                     />
                 );
+            case "staff":
+                return (
+                    <StaffBlock
+                        key={block.id}
+                        id={block.id}
+                        onDataChange={handleBlockDataChange}
+                    />
+                );
             default:
                 return null;
         }
@@ -320,6 +329,7 @@ const PageForm = ({ props }) => {
                         <option value="map">Karta</option>
                         <option value="event">Event</option>
                         <option value="menu">Matmeny</option>
+                        <option value="staff">Personal</option>
                     </select>
                 </div>
             </form>

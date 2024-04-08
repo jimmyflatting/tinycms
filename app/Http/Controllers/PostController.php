@@ -21,7 +21,7 @@ class PostController extends Controller
 			return Inertia::render('public/NotFound');
 		}
 
-		return Inertia::render('public/Post', ['Post' => $Post]);
+		return Inertia::render('public/Post', ['Post' => $post]);
 	}
 
 

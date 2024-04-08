@@ -45,6 +45,12 @@ export default function AuthMenu() {
                     />
                     <AuthItem
                         expanded={expanded}
+                        href="admin.staff.index"
+                        icon={<FaUser />}
+                        tooltip={"Personal"}
+                    />
+                    <AuthItem
+                        expanded={expanded}
                         href="admin.users.index"
                         icon={<FaUser />}
                         tooltip={"Användare"}
