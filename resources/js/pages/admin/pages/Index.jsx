@@ -1,4 +1,4 @@
-import PagesTable from "@/components/pages/PagesTable";
+import PagesTable from "@/components/admin/pages/PagesTable";
 import Auth from "@/layouts/Auth";
 import Card from "@/layouts/components/Card";
 import { Link } from "@inertiajs/react";
