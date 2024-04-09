@@ -103,7 +103,7 @@ export default function SettingsEdit({ props }) {
             <form onSubmit={handleSubmit}>
                 <div
                     id="information"
-                    className={`tab-group ${
+                    className={`tab-group mb-5 ${
                         activeTab === "information" ? "block" : "hidden"
                     }`}
                 >
@@ -111,6 +111,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="instagram">Instagram</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="instagram"
                                 value={data.instagram}
@@ -120,6 +121,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="linkedin">LinkedIn</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="linkedin"
                                 value={data.linkedin}
@@ -129,6 +131,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="twitter">Twitter</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="twitter"
                                 value={data.twitter}
@@ -138,6 +141,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="facebook">Facebook</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="facebook"
                                 value={data.facebook}
@@ -147,6 +151,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="phone">Telefon</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="phone"
                                 value={data.phone}
@@ -156,6 +161,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="email">Email</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="email"
                                 name="email"
                                 value={data.email}
@@ -165,6 +171,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="country">Country</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="country"
                                 value={data.country}
@@ -174,6 +181,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="address">Address</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="address"
                                 value={data.address}
@@ -183,6 +191,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="state">State</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="state"
                                 value={data.state}
@@ -192,6 +201,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="zip">Zip</label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="zip"
                                 value={data.zip}
@@ -202,13 +212,14 @@ export default function SettingsEdit({ props }) {
                 </div>
                 <div
                     id="colors_fonts"
-                    className={`tab-group ${
+                    className={`tab-group mb-5 ${
                         activeTab === "colors_fonts" ? "block" : "hidden"
                     }`}
                 >
                     <div className="form-group flex flex-col">
                         <label htmlFor="font_heading">Font heading</label>
                         <select
+                            className="rounded-lg border-gray-200"
                             name="font_heading"
                             value={data.font_heading}
                             onChange={handleChange}
@@ -224,6 +235,7 @@ export default function SettingsEdit({ props }) {
                     <div className="form-group flex flex-col">
                         <label htmlFor="font_body">Font body</label>
                         <select
+                            className="rounded-lg border-gray-200"
                             name="font_body"
                             value={data.font_body}
                             onChange={handleChange}
@@ -239,6 +251,7 @@ export default function SettingsEdit({ props }) {
                     <div className="form-group flex flex-col">
                         <label htmlFor="primary_color">Primary color</label>
                         <input
+                            className="rounded-lg border-gray-200"
                             type="text"
                             name="primary_color"
                             value={data.primary_color}
@@ -255,6 +268,7 @@ export default function SettingsEdit({ props }) {
                     <div className="form-group flex flex-col">
                         <label htmlFor="secondary_color">Secondary color</label>
                         <input
+                            className="rounded-lg border-gray-200"
                             type="text"
                             name="secondary_color"
                             value={data.secondary_color}
@@ -271,6 +285,7 @@ export default function SettingsEdit({ props }) {
                     <div className="form-group flex flex-col">
                         <label htmlFor="accent_color">Accent color</label>
                         <input
+                            className="rounded-lg border-gray-200"
                             type="text"
                             name="accent_color"
                             value={data.accent_color}
@@ -289,6 +304,7 @@ export default function SettingsEdit({ props }) {
                             Background color
                         </label>
                         <input
+                            className="rounded-lg border-gray-200"
                             type="text"
                             name="background_color"
                             value={data.background_color}
@@ -305,6 +321,7 @@ export default function SettingsEdit({ props }) {
                     <div className="form-group flex flex-col">
                         <label htmlFor="overlay_color">Overlay color</label>
                         <input
+                            className="rounded-lg border-gray-200"
                             type="text"
                             name="overlay_color"
                             value={data.overlay_color}
@@ -321,6 +338,7 @@ export default function SettingsEdit({ props }) {
                     <div className="form-group flex flex-col">
                         <label htmlFor="header_color">Header color</label>
                         <input
+                            className="rounded-lg border-gray-200"
                             type="text"
                             name="header_color"
                             value={data.header_color}
@@ -337,7 +355,7 @@ export default function SettingsEdit({ props }) {
 
                 <div
                     id="analytics_scripts"
-                    className={`tab-group ${
+                    className={`tab-group mb-5 ${
                         activeTab === "analytics_scripts" ? "block" : "hidden"
                     }`}
                 >
@@ -347,26 +365,29 @@ export default function SettingsEdit({ props }) {
                                 Meta Pixel
                             </label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="facebook_pixel"
                                 value={data.facebook_pixel}
                                 onChange={handleChange}
-                            ></input>
+                            />
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="google_analytics" className="mb-1">
                                 Google Analytics
                             </label>
                             <input
+                                className="rounded-lg border-gray-200"
                                 type="text"
                                 name="google_analytics"
                                 value={data.google_analytics}
                                 onChange={handleChange}
-                            ></input>
+                            />
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="head_scripts">Head scripts</label>
                             <textarea
+                                className="rounded-lg border-gray-200"
                                 name="head_scripts"
                                 value={data.head_scripts}
                                 onChange={handleChange}
@@ -376,6 +397,7 @@ export default function SettingsEdit({ props }) {
                         <div className="flex flex-col">
                             <label htmlFor="body_scripts">Body scripts</label>
                             <textarea
+                                className="rounded-lg border-gray-200"
                                 name="body_scripts"
                                 value={data.body_scripts}
                                 onChange={handleChange}
@@ -387,6 +409,7 @@ export default function SettingsEdit({ props }) {
                                 Footer scripts
                             </label>
                             <textarea
+                                className="rounded-lg border-gray-200"
                                 name="footer_scripts"
                                 value={data.footer_scripts}
                                 onChange={handleChange}
@@ -396,10 +419,10 @@ export default function SettingsEdit({ props }) {
                     </div>
                 </div>
 
-                <div className="btngrp">
+                <div className="flex flex-row justify-end">
                     <button
                         type="submit"
-                        className="btn btn-primary"
+                        className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
                         disabled={processing}
                     >
                         Spara

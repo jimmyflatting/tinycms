@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
+import DevicesLoading from "./DevicesLoading";
 
 const Devices = ({ nDaysAgo }) => {
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
     const Capitalize = (str) => {
@@ -10,6 +12,7 @@ const Devices = ({ nDaysAgo }) => {
     };
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const response = await fetch(
                 "api/analytics?nDaysAgo=" +
@@ -18,6 +21,7 @@ const Devices = ({ nDaysAgo }) => {
             );
             const responseData = await response.json();
             setData(responseData.slice(0, 3)); // skipa allt som inte är mobil, dekstop eller tablet
+            setLoading(false);
         } catch (error) {
             console.error("Error fetching analytics data:", error);
         }
@@ -79,7 +83,14 @@ const Devices = ({ nDaysAgo }) => {
 
     return (
         <div>
-            <Doughnut data={prepareChartData()} />
+            <h2 className="text-lg font-bold border-b mb-3">Enheter</h2>
+            <div className="w-1/2 flex flex-row justify-center mx-auto">
+                {loading ? (
+                    <DevicesLoading />
+                ) : (
+                    <Doughnut data={prepareChartData()} />
+                )}
+            </div>
         </div>
     );
 };

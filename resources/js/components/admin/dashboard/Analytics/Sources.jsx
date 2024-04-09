@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import SourcesLoading from "./SourcesLoading";
 
 export default function Sources({ nDaysAgo }) {
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [sources, setSources] = useState([
@@ -27,6 +29,7 @@ export default function Sources({ nDaysAgo }) {
     ]);
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const response = await fetch(
                 "api/analytics?nDaysAgo=" +
@@ -35,6 +38,7 @@ export default function Sources({ nDaysAgo }) {
             );
             const data = await response.json();
             setData(data);
+            setLoading(false);
         } catch (error) {
             console.error("Error fetching analytics data:", error);
         }
@@ -85,16 +89,23 @@ export default function Sources({ nDaysAgo }) {
     return (
         <div className="">
             <h2 className="text-lg font-bold border-b mb-3">Trafikkällor</h2>
-            <ul>
-                {sources.map((item, index) => {
-                    return (
-                        <li key={index} className="flex justify-between mb-1">
-                            <span>{item.source}</span>
-                            <span>{item.sessions}</span>
-                        </li>
-                    );
-                })}
-            </ul>
+            {loading ? (
+                <SourcesLoading />
+            ) : (
+                <ul>
+                    {sources.map((item, index) => {
+                        return (
+                            <li
+                                key={index}
+                                className="flex justify-between mb-1"
+                            >
+                                <span>{item.source}</span>
+                                <span>{item.sessions}</span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </div>
     );
 }

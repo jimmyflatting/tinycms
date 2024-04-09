@@ -28,7 +28,7 @@ export default function AnalyticsWidget() {
                 </select>
             </div>
             <Graph nDaysAgo={nDaysAgo} />
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-col justify-between space-y-5">
                 <Pages nDaysAgo={nDaysAgo} />
                 <Sources nDaysAgo={nDaysAgo} />
                 <Devices nDaysAgo={nDaysAgo} />
