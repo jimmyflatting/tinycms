@@ -37,7 +37,6 @@ export default function Create({ ...props }) {
             .then((data) => {
                 setImageUrl(data.url);
                 setData("avatar", data.url); // Set avatar field in form data
-                console.log(data.url);
             })
             .catch((error) => {
                 console.error("Error uploading file:", error);
@@ -46,15 +45,8 @@ export default function Create({ ...props }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
-        post(route("admin.users.store"), {
-            onSuccess: () => {
-                console.log("success");
-            },
-        });
+        post(route("admin.users.store"));
     };
-
-    console.log(data);
 
     return (
         <Auth user={props.auth.user}>

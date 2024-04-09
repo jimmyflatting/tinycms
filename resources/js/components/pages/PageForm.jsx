@@ -30,8 +30,6 @@ const PageForm = ({ props }) => {
         status: selectedStatus,
     });
 
-    console.log(data);
-
     const addBlock = (type) => {
         if (type === "") return;
 

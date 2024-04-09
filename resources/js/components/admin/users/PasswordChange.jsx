@@ -18,7 +18,6 @@ export default function PasswordChange({ user }) {
 
     const handlePasswordSubmit = (e) => {
         e.preventDefault();
-        console.log("submit");
     };
 
     return (

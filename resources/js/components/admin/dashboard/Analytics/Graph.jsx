@@ -20,6 +20,6 @@ export default function Graph({ nDaysAgo }) {
     useEffect(() => {
         fetchData();
     }, []);
-    //    console.log(data);
+
     return <div>Graph</div>;
 }

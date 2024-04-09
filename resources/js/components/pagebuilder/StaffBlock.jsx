@@ -22,8 +22,6 @@ export default function StaffBlock({ id, onDataChange }) {
         setSelectedStaff(selectedOptions);
     };
 
-    console.log(staff);
-
     return (
         <>
             <div className="staffSelect">

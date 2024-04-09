@@ -15,12 +15,7 @@ export default function PageEdit({ props }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
-        put(route("admin.pages.update", props.page.id), {
-            onSuccess: () => {
-                console.log("success");
-            },
-        });
+        put(route("admin.pages.update", props.page.id));
     };
 
     const handleDelete = (id) => {

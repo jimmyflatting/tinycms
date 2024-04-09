@@ -6,7 +6,6 @@ import Card from "@/layouts/components/Card";
 import React from "react";
 
 export default function Admin({ ...props }) {
-    // console.log(props);
     return (
         <Auth>
             <GreetingsWidget props={props.auth.user.name} />

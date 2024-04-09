@@ -6,6 +6,7 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\GoogleAnalyticsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------

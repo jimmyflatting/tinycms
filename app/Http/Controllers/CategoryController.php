@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Post;
+use Carbon\Carbon;
+
 class CategoryController extends Controller
 {
     /**
@@ -17,8 +17,18 @@ class CategoryController extends Controller
         return Category::all();
     }
 
-	public function getPosts($cat_id) {
-		$posts = Post::where('category_id', $cat_id)->get();
+	public function getPosts($cat_id)
+	{
+		if ($cat_id === "0") {
+			$posts = Post::with('category')->get();
+		} else {
+			$posts = Post::where('category_id', $cat_id)->with('category')->get();
+		}
+
+		foreach ($posts as $post) {
+			$post->formatted_updated_at = Carbon::parse($post->updated_at)->format('Y-m-d H:i');
+		}
+
 		return $posts;
 	}
 

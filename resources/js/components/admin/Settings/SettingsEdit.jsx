@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/inertia-react";
 import React, { useState } from "react";
 import { SketchPicker } from "react-color";
-import FontList from "./Settings/FontList.json";
+import FontList from "../Settings/FontList.json";
 
 export default function SettingsEdit({ props }) {
     const [activeTab, setActiveTab] = useState("information");
@@ -54,15 +54,9 @@ export default function SettingsEdit({ props }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
-        put(route("admin.settings.update"), {
-            onSuccess: () => {
-                console.log("success");
-            },
-        });
-    };
 
-    console.log(data);
+        put(route("admin.settings.update"));
+    };
 
     return (
         <div className="max-w-2xl mx-auto">

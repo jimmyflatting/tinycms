@@ -1,4 +1,4 @@
-import SettingsEdit from "@/components/admin/SettingsEdit";
+import SettingsEdit from "@/components/admin/Settings/SettingsEdit";
 import Auth from "@/layouts/Auth";
 import Card from "@/layouts/components/Card";
 import React from "react";

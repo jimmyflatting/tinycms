@@ -70,9 +70,9 @@ class AdminPostController extends Controller
      */
     public function edit($id)
     {
-		$page = Post::where('id', $id)->firstOrFail();
+		$post = Post::where('id', $id)->firstOrFail();
 
-		return Inertia::render('admin/posts/Edit', ['page' => $page]);
+		return Inertia::render('admin/posts/Edit', ['post' => $post]);
     }
 
     /**
@@ -84,13 +84,13 @@ class AdminPostController extends Controller
      */
     public function update(Request $request, $id)
     {
-		$page = Post::where('id', $id)->firstOrFail();
+		$post = Post::where('id', $id)->firstOrFail();
 
 		$slug = str_replace(['å', 'ä', 'ö'], ['a', 'a', 'o'], $request->title);
 		$slug = str_replace(' ', '-', strtolower($slug));
 		$request->merge(['slug' => $slug]);
 
-		$page->update($request->all());
+		$post->update($request->all());
 		return Inertia::location(route('admin.posts.index'));
     }
 
@@ -102,9 +102,9 @@ class AdminPostController extends Controller
      */
     public function destroy($id)
     {
-		$page = Post::findOrFail($id);
+		$post = Post::findOrFail($id);
 
-		$page->delete();
+		$post->delete();
 
 		return response()->json(['success' => true, 'message' => 'Post deleted successfully']);
     }

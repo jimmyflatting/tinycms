@@ -20,8 +20,6 @@ export default function StaffCreate() {
         post(route("admin.staff.create"));
     };
 
-    console.log(data);
-
     return (
         <Card>
             <form className="space-y-5" onSubmit={handleSubmit}>

@@ -37,8 +37,6 @@ export default function StaffEdit({ staff }) {
         put(route("admin.staff.update", staff.id));
     };
 
-    console.log(data);
-
     return (
         <Card>
             <form className="space-y-5" onSubmit={handleSubmit}>

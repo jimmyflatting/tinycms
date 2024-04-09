@@ -5,7 +5,6 @@ import TextComponent from "@/components/block/TextComponent";
 
 export default function Page({ ...props }) {
     let content = JSON.parse(props.page.content);
-    console.log(content);
 
     const renderBlockComponent = (block) => {
         switch (block.type) {

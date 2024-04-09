@@ -1,5 +1,4 @@
-import PageEdit from "@/components/admin/PageEdit";
-import PageForm from "@/components/admin/PageForm";
+import PageForm from "@/components/pages/PageForm";
 import Auth from "@/layouts/Auth";
 import Card from "@/layouts/components/Card";
 import React from "react";

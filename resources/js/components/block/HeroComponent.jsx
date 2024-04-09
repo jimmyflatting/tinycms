@@ -5,8 +5,6 @@ import HeroThree from "./Hero/HeroThree";
 import HeroFour from "./Hero/HeroFour";
 
 export default function HeroComponent({ props }) {
-    console.log(props);
-
     const renderComponent = (props) => {
         switch (props.variant) {
             case 1:

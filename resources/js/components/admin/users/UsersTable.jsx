@@ -2,7 +2,11 @@ import Card from "@/layouts/components/Card";
 import { Link } from "@inertiajs/react";
 import React from "react";
 
-export default function StaffTable({ staff }) {
+export default function UsersTable({ users }) {
+    const Captilize = (role) => {
+        return role.charAt(0).toUpperCase() + role.slice(1);
+    };
+
     return (
         <Card>
             <table className="w-full">
@@ -10,28 +14,30 @@ export default function StaffTable({ staff }) {
                     <tr>
                         <th className="py-2">Namn</th>
                         <th>Roll</th>
-                        <th>Telefon</th>
-                        <th>E-post</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {staff.map((staff) => (
+                    {users.map((user) => (
                         <tr
-                            key={staff.id}
+                            key={user.id}
                             className="border-b-2 border-gray-200 transition-all hover:bg-gray-100"
                         >
                             <td className="py-5">
                                 <Link
                                     className="font-bold underline transition-all"
-                                    href={route("admin.staff.edit", staff.id)}
+                                    href={route("admin.users.edit", user.id)}
                                 >
-                                    {staff.name}
+                                    {user.name}
                                 </Link>
                             </td>
 
-                            <td>{staff.title}</td>
-                            <td>{staff.phone}</td>
-                            <td>{staff.email}</td>
+                            <td>
+                                {user.role === "superadmin"
+                                    ? "Admin"
+                                    : Captilize(user.role)}
+                            </td>
+                            <td>{user.email}</td>
                         </tr>
                     ))}
                 </tbody>

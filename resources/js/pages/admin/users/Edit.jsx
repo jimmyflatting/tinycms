@@ -18,7 +18,6 @@ export default function Edit({ ...props }) {
         fetch(`/api/staff/${props.user.id}`)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setData(data);
                 setImageUrl(data.avatar);
             })
@@ -100,15 +99,9 @@ export default function Edit({ ...props }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
-        put(route("admin.users.update", data.id), {
-            onSuccess: () => {
-                console.log("success");
-            },
-        });
-    };
 
-    console.log(data);
+        put(route("admin.users.update", data.id));
+    };
 
     return (
         <Auth user={props.auth.user}>

@@ -4,8 +4,6 @@ import React from "react";
 export default function Post({ ...props }) {
     let post = props.post;
 
-    console.log(post);
-
     return (
         <Guest>
             <div className="post">

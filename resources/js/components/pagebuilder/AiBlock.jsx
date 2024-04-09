@@ -12,8 +12,6 @@ async function generateAI() {
         1, // number (numeric value between 1 and 1000) in 'Top-k' Slider component
         1, // number (numeric value between 1.0 and 2.0) in 'Repetition penalty' Slider component
     ]);
-
-    console.log(result.data);
 }
 
 export default function AiBlock({ id, onDataChange }) {

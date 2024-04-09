@@ -28,14 +28,8 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("login"), {
-            onSuccess: () => {
-                console.log("Welcome");
-            },
-        });
+        post(route("login"));
     };
-
-    console.log(data);
 
     return (
         <div className="container h-[100vh] flex justify-center items-center w-full">
