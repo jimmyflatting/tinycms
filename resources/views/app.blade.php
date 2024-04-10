@@ -47,7 +47,8 @@
 				--heading-font: {{ $heading }}, sans-serif;
 				--body-font: {{ $body }}, sans-serif;
 
-				--primary: {{ $page['props']['settings']['primary_color']}};
+				--primary: 305, 46%, 30%;
+				/* --primary: {{ $page['props']['settings']['primary_color']}}; */
 				--secondary: {{ $page['props']['settings']['secondary_color']}};
 				--accent: {{ $page['props']['settings']['accent_color']}};
 

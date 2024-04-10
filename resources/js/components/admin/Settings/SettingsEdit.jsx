@@ -7,6 +7,8 @@ import Information from "./Information";
 import ColorsFonts from "./ColorsFonts";
 import AnalyticsScripts from "./AnalyticsScripts";
 import { Button } from "@/components/ui/button";
+import { hexToHSL } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 export default function SettingsEdit({ props }) {
     let fonts = FontList.items;
@@ -47,8 +49,14 @@ export default function SettingsEdit({ props }) {
         zip: props.zip,
     });
 
-    const handleChange = (event) => {
-        setData(event.target.name, event.target.value);
+    const handleChange = (e) => {
+        if (e.target.type === "color") {
+            const { h, s, l } = hexToHSL(e.target.value);
+            let hsl = `${h}, ${s}%, ${l}%`;
+            setData({ ...data, [e.target.name]: hsl });
+        } else {
+            setData({ ...data, [e.target.name]: e.target.value });
+        }
     };
 
     const handleSubmit = (e) => {

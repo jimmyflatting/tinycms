@@ -1,4 +1,7 @@
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import React from "react";
+import { useState } from "react";
 import { SketchPicker } from "react-color";
 
 export default function ColorsFonts({ data, handleChange, fonts }) {
@@ -37,101 +40,75 @@ export default function ColorsFonts({ data, handleChange, fonts }) {
                     </select>
                 </div>
 
-                <div className="form-group flex flex-col">
-                    <label htmlFor="primary_color">Primary color</label>
-                    <input
-                        className="rounded-lg border-gray-200"
-                        type="text"
+                <div className="form-group flex flex-col my-5">
+                    <Label className="mb-3" htmlFor="primary_color">
+                        Primärfärg
+                    </Label>
+                    <Input
+                        type="color"
                         name="primary_color"
-                        value={data.primary_color}
                         onChange={handleChange}
-                    />
-                    <SketchPicker
-                        color={data.primary_color}
-                        onChange={(color) =>
-                            setData("primary_color", color.hex)
-                        }
+                        defaultValue={data.primary_color}
                     />
                 </div>
+                <div className="form-group flex flex-col my-5">
+                    <Label className="mb-3" htmlFor="secondary_color">
+                        Secondary
+                    </Label>
 
-                <div className="form-group flex flex-col">
-                    <label htmlFor="secondary_color">Secondary color</label>
-                    <input
-                        className="rounded-lg border-gray-200"
-                        type="text"
+                    <Input
+                        type="color"
                         name="secondary_color"
-                        value={data.secondary_color}
                         onChange={handleChange}
-                    />
-                    <SketchPicker
-                        color={data.secondary_color}
-                        onChange={(color) =>
-                            setData("secondary_color", color.hex)
-                        }
+                        defaultValue={data.secondary_color}
                     />
                 </div>
+                <div className="form-group flex flex-col my-5">
+                    <Label className="mb-3" htmlFor="accent_color">
+                        Accent
+                    </Label>
 
-                <div className="form-group flex flex-col">
-                    <label htmlFor="accent_color">Accent color</label>
-                    <input
-                        className="rounded-lg border-gray-200"
-                        type="text"
+                    <Input
+                        type="color"
                         name="accent_color"
-                        value={data.accent_color}
                         onChange={handleChange}
-                    />
-                    <SketchPicker
-                        color={data.accent_color}
-                        onChange={(color) => setData("accent_color", color.hex)}
+                        defaultValue={data.accent_color}
                     />
                 </div>
+                <div className="form-group flex flex-col my-5">
+                    <Label className="mb-3" htmlFor="background_color">
+                        Background
+                    </Label>
 
-                <div className="form-group flex flex-col">
-                    <label htmlFor="background_color">Background color</label>
-                    <input
-                        className="rounded-lg border-gray-200"
-                        type="text"
+                    <Input
+                        type="color"
                         name="background_color"
-                        value={data.background_color}
                         onChange={handleChange}
-                    />
-                    <SketchPicker
-                        color={data.background_color}
-                        onChange={(color) =>
-                            setData("background_color", color.hex)
-                        }
+                        defaultValue={data.background_color}
                     />
                 </div>
+                <div className="form-group flex flex-col my-5">
+                    <Label className="mb-3" htmlFor="overlay_color">
+                        Overlay
+                    </Label>
 
-                <div className="form-group flex flex-col">
-                    <label htmlFor="overlay_color">Overlay color</label>
-                    <input
-                        className="rounded-lg border-gray-200"
-                        type="text"
+                    <Input
+                        type="color"
                         name="overlay_color"
-                        value={data.overlay_color}
                         onChange={handleChange}
-                    />
-                    <SketchPicker
-                        color={data.overlay_color}
-                        onChange={(color) =>
-                            setData("overlay_color", color.hex)
-                        }
+                        defaultValue={data.overlay_color}
                     />
                 </div>
+                <div className="form-group flex flex-col my-5">
+                    <Label className="mb-3" htmlFor="header_color">
+                        Header
+                    </Label>
 
-                <div className="form-group flex flex-col">
-                    <label htmlFor="header_color">Header color</label>
-                    <input
-                        className="rounded-lg border-gray-200"
-                        type="text"
+                    <Input
+                        type="color"
                         name="header_color"
-                        value={data.header_color}
                         onChange={handleChange}
-                    />
-                    <SketchPicker
-                        color={data.header_color}
-                        onChange={(color) => setData("header_color", color.hex)}
+                        defaultValue={data.header_color}
                     />
                 </div>
             </div>
