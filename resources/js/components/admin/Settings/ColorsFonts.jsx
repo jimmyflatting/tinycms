@@ -1,13 +1,19 @@
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React from "react";
-import { useState } from "react";
-import { SketchPicker } from "react-color";
+import DropdownFonts from "./ColorsFonts/DropdownFonts";
 
 export default function ColorsFonts({ data, handleChange, fonts }) {
     return (
         <>
             <div>
+                <Label>Font heading (todo...)</Label>
+                <DropdownFonts
+                    data={data}
+                    handleChange={handleChange}
+                    fonts={fonts}
+                    name="font_heading"
+                />
                 <div className="form-group flex flex-col">
                     <label htmlFor="font_heading">Font heading</label>
                     <select
@@ -72,7 +78,6 @@ export default function ColorsFonts({ data, handleChange, fonts }) {
                         type="color"
                         name="accent_color"
                         onChange={handleChange}
-                        defaultValue={data.accent_color}
                     />
                 </div>
                 <div className="form-group flex flex-col my-5">

@@ -64,6 +64,8 @@ export default function SettingsEdit({ props }) {
         put(route("admin.settings.update"));
     };
 
+    console.log(data);
+
     return (
         <form onSubmit={handleSubmit}>
             <Tabs defaultValue="information">

@@ -3,7 +3,19 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const Input = React.forwardRef(({ className, type, ...props }, ref) => {
-    console.log(props);
+    const [value, setValue] = React.useState(props.defaultValue);
+
+    const handleChange = (e) => {
+        if (e.target.type === "color") {
+            const { h, s, l } = hexToHSL(e.target.value);
+            let hsl = `${h}, ${s}%, ${l}%`;
+            setValue(hsl);
+            props.onChange({ target: { name: e.target.name, value: hsl } });
+        } else {
+            setValue(e.target.value);
+        }
+    };
+
     if (type === "color") {
         return (
             <div
@@ -16,6 +28,8 @@ const Input = React.forwardRef(({ className, type, ...props }, ref) => {
                     type={type}
                     ref={ref}
                     {...props}
+                    defaultValue={value}
+                    onChange={(e) => setValue(e.target.value)}
                     className={cn(
                         "h-10 w-10 bg-background border-none text-sm",
                         className
@@ -24,6 +38,8 @@ const Input = React.forwardRef(({ className, type, ...props }, ref) => {
                 <input
                     type="text"
                     {...props}
+                    defaultValue={value}
+                    onChange={(e) => setValue(e.target.value)}
                     className={cn(
                         "h-10 w-full bg-background border-none text-sm focus:border-none",
                         className
