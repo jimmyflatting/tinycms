@@ -2,13 +2,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useForm } from "@inertiajs/inertia-react";
 import React, { useState } from "react";
 
-import FontList from "../Settings/FontList.json";
-import Information from "./Information";
-import ColorsFonts from "./ColorsFonts";
-import AnalyticsScripts from "./AnalyticsScripts";
+import FontList from "./ColorsFonts/FontList.json";
+import ColorsTable from "./ColorsTable";
+import AnalyticsTable from "./AnalyticsTable";
 import { Button } from "@/components/ui/button";
 import { hexToHSL } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
+import InformationTable from "./InformationTable";
 
 export default function SettingsEdit({ props }) {
     let fonts = FontList.items;
@@ -50,7 +50,7 @@ export default function SettingsEdit({ props }) {
     });
 
     const handleChange = (e) => {
-        if (e.target.type === "color") {
+        if (e.target.type === "color" || e.target.name.includes("color")) {
             const { h, s, l } = hexToHSL(e.target.value);
             let hsl = `${h}, ${s}%, ${l}%`;
             setData({ ...data, [e.target.name]: hsl });
@@ -81,20 +81,20 @@ export default function SettingsEdit({ props }) {
                     </TabsTrigger>
                 </TabsList>
                 <TabsContent value="information">
-                    <Information data={props} handleChange={handleChange} />
+                    <InformationTable
+                        data={props}
+                        handleChange={handleChange}
+                    />
                 </TabsContent>
                 <TabsContent value="colors_fonts">
-                    <ColorsFonts
+                    <ColorsTable
                         data={props}
                         handleChange={handleChange}
                         fonts={fonts}
                     />
                 </TabsContent>
                 <TabsContent value="analytics_scripts">
-                    <AnalyticsScripts
-                        data={props}
-                        handleChange={handleChange}
-                    />
+                    <AnalyticsTable data={props} handleChange={handleChange} />
                 </TabsContent>
             </Tabs>
             <div className="flex flex-row justify-end mt-5">

@@ -1,25 +1,33 @@
-import StaffTable from "@/components/admin/staff/StaffTable";
 import UsersTable from "@/components/admin/users/UsersTable";
+import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 import Auth from "@/layouts/Auth";
-import Card from "@/layouts/components/Card";
 import { Link } from "@inertiajs/react";
 import React from "react";
 
 export default function Index({ ...props }) {
     return (
         <Auth>
-            <Card className="flex flex-row justify-between">
-                <h2 className="text-xl my-auto">Användare</h2>
-                <button
-                    className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all"
-                    role="button"
-                >
-                    <Link href={route("admin.users.create")}>
-                        Skapa ny användare
-                    </Link>
-                </button>
+            <Card>
+                <CardHeader className="flex flex-row justify-between">
+                    <h2 className="text-xl my-auto">Användare</h2>
+                    <Button role="button" variant="outline">
+                        <Link href={route("admin.users.create")}>
+                            Skapa ny användare
+                        </Link>
+                    </Button>
+                </CardHeader>
             </Card>
-            <UsersTable users={props.users} />
+            <Card>
+                <UsersTable users={props.users} />
+            </Card>
         </Auth>
     );
 }

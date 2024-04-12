@@ -1,84 +1,104 @@
-import Card from "@/layouts/components/Card";
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 import { Link } from "@inertiajs/react";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 
-export default function PostsTable() {
-    const [posts, setPosts] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [category, setCategory] = useState(0);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            const response = await axios.get("/api/posts/categories");
-            setCategories(response.data);
-        };
-
-        fetchCategories();
-    }, [setCategories]);
-
-    useEffect(() => {
-        const fetchPosts = async () => {
-            const response = await axios.get(`/api/posts/category/${category}`);
-            setPosts(response.data);
-        };
-
-        fetchPosts();
-    }, [category]);
-
-    const handleCategoryChange = (e) => {
-        setCategory(e.target.value);
-    };
-
+export default function PostsTable({ posts }) {
+    console.log(posts);
+    // return null;
     return (
-        <Card>
-            <div className="flex justify-end mb-5 space-x-5">
-                <select
-                    className="rounded-lg border border-gray-200"
-                    name="category"
-                    id=""
-                    onChange={handleCategoryChange}
-                >
-                    <option value="0">Alla</option>
-                    {categories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                            {category.category_name}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <table className="w-full">
-                <thead className="border-b-2 border-gray-200">
-                    <tr>
-                        <th className="py-2">Inlägg</th>
-                        <th>Kategori</th>
-                        <th>Status</th>
-                        <th>Senast ändrad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {posts.map((post) => (
-                        <tr
-                            key={post.id}
-                            className="border-b-2 border-gray-200 transition-all hover:bg-gray-100"
-                        >
-                            <td className="py-5">
+        <>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Inlägg</TableHead>
+                        <TableHead>Kategori</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="text-right">
+                            Senast ändrad
+                        </TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {posts.data.map((post) => (
+                        <TableRow key={post.id}>
+                            <TableCell className="flex flex-col">
                                 <Link
-                                    className="font-bold underline transition-all"
+                                    className="font-medium"
                                     href={route("admin.posts.edit", post.id)}
                                 >
                                     {post.title}
                                 </Link>
-                            </td>
-                            <td>{post.category.category_name}</td>
-                            <td>{post.status}</td>
-                            <td>{post.formatted_updated_at}</td>
-                        </tr>
+                            </TableCell>
+                            {/* <TableCell>{post.category.category_name}</TableCell> */}
+                            {/* <TableCell>{handleStatus(post.status)}</TableCell> */}
+                            <TableCell className="text-right">
+                                {post.formatted_updated_at}
+                            </TableCell>
+                        </TableRow>
                     ))}
-                </tbody>
-            </table>
-        </Card>
+                </TableBody>
+            </Table>
+
+            {/* PAGINATION */}
+
+            <Pagination className="my-3">
+                <PaginationContent>
+                    {posts.current_page > 1 && (
+                        <>
+                            <PaginationItem>
+                                <PaginationPrevious
+                                    href={posts.prev_page_url}
+                                />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink href={posts.prev_page_url}>
+                                    {posts.current_page - 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                        </>
+                    )}
+                    <PaginationItem>
+                        <PaginationLink
+                            className="border"
+                            href={posts.path + "/?page=" + posts.current_page}
+                        >
+                            {posts.current_page}
+                        </PaginationLink>
+                    </PaginationItem>
+                    {posts.last_page > posts.current_page && (
+                        <>
+                            <PaginationItem>
+                                <PaginationLink href={posts.next_page_url}>
+                                    {posts.current_page + 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationNext href={posts.next_page_url} />
+                            </PaginationItem>
+                        </>
+                    )}
+                </PaginationContent>
+            </Pagination>
+        </>
     );
 }

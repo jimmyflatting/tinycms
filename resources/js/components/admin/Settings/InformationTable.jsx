@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Information({ data, handleChange }) {
+export default function InformationTable({ data, handleChange }) {
     return (
         <div className="form-group flex flex-col space-y-5">
             <div className="flex flex-col">

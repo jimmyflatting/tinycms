@@ -3,50 +3,35 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import DropdownFonts from "./ColorsFonts/DropdownFonts";
 
-export default function ColorsFonts({ data, handleChange, fonts }) {
+export default function ColorsTable({ data, handleChange, fonts }) {
     return (
         <>
-            <div>
-                <Label>Font heading (todo...)</Label>
-                <DropdownFonts
-                    data={data}
-                    handleChange={handleChange}
-                    fonts={fonts}
-                    name="font_heading"
-                />
+            <div className="flex flex-col space-y-5 mt-5">
                 <div className="form-group flex flex-col">
-                    <label htmlFor="font_heading">Font heading</label>
-                    <select
-                        className="rounded-lg border-gray-200"
+                    <Label className="mb-3" htmlFor="font_heading">
+                        Font heading
+                    </Label>
+                    <DropdownFonts
+                        currentValue={data.font_heading}
+                        data={data}
+                        handleChange={handleChange}
+                        fonts={fonts}
                         name="font_heading"
-                        value={data.font_heading}
-                        onChange={handleChange}
-                    >
-                        {fonts.map((font, idx) => (
-                            <option key={idx} value={font.family}>
-                                {font.family}
-                            </option>
-                        ))}
-                    </select>
+                    />
                 </div>
-
                 <div className="form-group flex flex-col">
-                    <label htmlFor="font_body">Font body</label>
-                    <select
-                        className="rounded-lg border-gray-200"
-                        name="font_body"
-                        value={data.font_body}
-                        onChange={handleChange}
-                    >
-                        {fonts.map((font, idx) => (
-                            <option key={idx} value={font.family}>
-                                {font.family}
-                            </option>
-                        ))}
-                    </select>
+                    <Label className="mb-3" htmlFor="font_body">
+                        Font body
+                    </Label>
+                    <DropdownFonts
+                        currentValue={data.font_body}
+                        data={data}
+                        handleChange={handleChange}
+                        fonts={fonts}
+                        name="font_heading"
+                    />
                 </div>
-
-                <div className="form-group flex flex-col my-5">
+                <div className="form-group flex flex-col">
                     <Label className="mb-3" htmlFor="primary_color">
                         Primärfärg
                     </Label>
@@ -57,7 +42,7 @@ export default function ColorsFonts({ data, handleChange, fonts }) {
                         defaultValue={data.primary_color}
                     />
                 </div>
-                <div className="form-group flex flex-col my-5">
+                <div className="form-group flex flex-col">
                     <Label className="mb-3" htmlFor="secondary_color">
                         Secondary
                     </Label>
@@ -69,7 +54,7 @@ export default function ColorsFonts({ data, handleChange, fonts }) {
                         defaultValue={data.secondary_color}
                     />
                 </div>
-                <div className="form-group flex flex-col my-5">
+                <div className="form-group flex flex-col">
                     <Label className="mb-3" htmlFor="accent_color">
                         Accent
                     </Label>
@@ -78,9 +63,10 @@ export default function ColorsFonts({ data, handleChange, fonts }) {
                         type="color"
                         name="accent_color"
                         onChange={handleChange}
+                        defaultValue={data.accent_color}
                     />
                 </div>
-                <div className="form-group flex flex-col my-5">
+                <div className="form-group flex flex-col">
                     <Label className="mb-3" htmlFor="background_color">
                         Background
                     </Label>
@@ -92,7 +78,7 @@ export default function ColorsFonts({ data, handleChange, fonts }) {
                         defaultValue={data.background_color}
                     />
                 </div>
-                <div className="form-group flex flex-col my-5">
+                <div className="form-group flex flex-col">
                     <Label className="mb-3" htmlFor="overlay_color">
                         Overlay
                     </Label>
@@ -104,7 +90,7 @@ export default function ColorsFonts({ data, handleChange, fonts }) {
                         defaultValue={data.overlay_color}
                     />
                 </div>
-                <div className="form-group flex flex-col my-5">
+                <div className="form-group flex flex-col">
                     <Label className="mb-3" htmlFor="header_color">
                         Header
                     </Label>

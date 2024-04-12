@@ -16,11 +16,18 @@ class AdminPostController extends Controller
      */
     public function index()
     {
-		$posts = Post::with('category')->get();
-
-		foreach ($posts as $post) {
-			$post->formatted_updated_at = Carbon::parse($post->updated_at)->format('Y-m-d H:i');
-		}
+		// $posts = Post::paginate(5)->with('category')->get();
+		$posts = Post::paginate(2);
+		// $posts = Post::paginate(5)->through(
+		// 	function ($post) {
+		// 		return [
+		// 			'id' => $post->id,
+		// 			'name' => $post->name,
+		// 			'formatted_updated_at' => Carbon::parse($post->updated_at)->format('Y-m-d H:i'),
+		// 			'category' => $post->category->name,
+		// 		];
+		// 	}
+		// );
 
 		return Inertia::render('admin/posts/Index', ['posts' => $posts]);
     }

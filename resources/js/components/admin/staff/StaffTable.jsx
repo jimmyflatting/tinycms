@@ -1,41 +1,45 @@
-import Card from "@/layouts/components/Card";
 import { Link } from "@inertiajs/react";
 import React from "react";
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
 
 export default function StaffTable({ staff }) {
     return (
-        <Card>
-            <table className="w-full">
-                <thead className="border-b-2 border-gray-200">
-                    <tr>
-                        <th className="py-2">Namn</th>
-                        <th>Roll</th>
-                        <th>Telefon</th>
-                        <th>E-post</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {staff.map((staff) => (
-                        <tr
-                            key={staff.id}
-                            className="border-b-2 border-gray-200 transition-all hover:bg-gray-100"
-                        >
-                            <td className="py-5">
-                                <Link
-                                    className="font-bold underline transition-all"
-                                    href={route("admin.staff.edit", staff.id)}
-                                >
-                                    {staff.name}
-                                </Link>
-                            </td>
-
-                            <td>{staff.title}</td>
-                            <td>{staff.phone}</td>
-                            <td>{staff.email}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </Card>
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead>Namn</TableHead>
+                    <TableHead>Roll</TableHead>
+                    <TableHead>Telefon</TableHead>
+                    <TableHead className="text-right">E-post</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {staff.map((staff) => (
+                    <TableRow key={staff.id}>
+                        <TableCell className="flex flex-col">
+                            <Link
+                                className="font-medium"
+                                href={route("admin.staff.edit", staff.id)}
+                            >
+                                {staff.name}
+                            </Link>
+                        </TableCell>
+                        <TableCell>{staff.title}</TableCell>
+                        <TableCell>{staff.phone}</TableCell>
+                        <TableCell className="text-right">
+                            {staff.email}
+                        </TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
     );
 }

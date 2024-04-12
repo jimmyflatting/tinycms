@@ -1,6 +1,14 @@
-import Card from "@/layouts/components/Card";
 import { Link } from "@inertiajs/react";
 import React from "react";
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
 
 export default function UsersTable({ users }) {
     const Captilize = (role) => {
@@ -8,40 +16,36 @@ export default function UsersTable({ users }) {
     };
 
     return (
-        <Card>
-            <table className="w-full">
-                <thead className="border-b-2 border-gray-200">
-                    <tr>
-                        <th className="py-2">Namn</th>
-                        <th>Roll</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <tr
-                            key={user.id}
-                            className="border-b-2 border-gray-200 transition-all hover:bg-gray-100"
-                        >
-                            <td className="py-5">
-                                <Link
-                                    className="font-bold underline transition-all"
-                                    href={route("admin.users.edit", user.id)}
-                                >
-                                    {user.name}
-                                </Link>
-                            </td>
-
-                            <td>
-                                {user.role === "superadmin"
-                                    ? "Admin"
-                                    : Captilize(user.role)}
-                            </td>
-                            <td>{user.email}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </Card>
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead>Namn</TableHead>
+                    <TableHead>Roll</TableHead>
+                    <TableHead className="text-right">E-post</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {users.map((user) => (
+                    <TableRow key={user.id}>
+                        <TableCell className="flex flex-col">
+                            <Link
+                                className="font-medium"
+                                href={route("admin.users.edit", user.id)}
+                            >
+                                {user.name}
+                            </Link>
+                        </TableCell>
+                        <TableCell>
+                            {user.role === "superadmin"
+                                ? "Admin"
+                                : Captilize(user.role)}
+                        </TableCell>
+                        <TableCell className="text-right">
+                            {user.email}
+                        </TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
     );
 }
