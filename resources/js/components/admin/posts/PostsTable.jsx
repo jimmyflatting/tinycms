@@ -24,6 +24,21 @@ import { useState } from "react";
 
 export default function PostsTable({ posts }) {
     console.log(posts);
+
+    const handleStatus = (status) => {
+        if (status === "published") {
+            return "Publicerad";
+        } else if (status === "draft") {
+            return "Utkast";
+        } else {
+            return status;
+        }
+    };
+
+    const capilize = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
     // return null;
     return (
         <>
@@ -49,8 +64,10 @@ export default function PostsTable({ posts }) {
                                     {post.title}
                                 </Link>
                             </TableCell>
-                            {/* <TableCell>{post.category.category_name}</TableCell> */}
-                            {/* <TableCell>{handleStatus(post.status)}</TableCell> */}
+                            <TableCell>
+                                {capilize(post.category.category_name)}
+                            </TableCell>
+                            <TableCell>{handleStatus(post.status)}</TableCell>
                             <TableCell className="text-right">
                                 {post.formatted_updated_at}
                             </TableCell>
