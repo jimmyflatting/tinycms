@@ -19,8 +19,8 @@ export default function Index({ ...props }) {
                     </Button>
                 </CardHeader>
             </Card>
-            <Card>
-                <MenuTable menus={props.menus} />
+            <Card className="p-5">
+                <MenuTable menus={props.menus} pages={props.pages} />
             </Card>
         </Auth>
     );

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminMenuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
@@ -37,6 +38,8 @@ Route::get('/posts/category/name/{cat_name}', [CategoryController::class, 'getPo
 
 Route::get('/staff', [PersonalController::class, 'index']);
 Route::get('/staff/{id}', [PersonalController::class, 'show']);
+
+Route::get('/menu/{id}', [AdminMenuController::class, 'show']);
 
 
 Route::post('/upload', [UploadController::class, 'upload']);

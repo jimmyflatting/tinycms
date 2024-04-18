@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Page;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -22,7 +23,9 @@ class AdminMenuController extends Controller
 			$menus = Menu::all();
 		}
 
-		return Inertia::render('admin/menus/Index', ['menus' => $menus]);
+		$pages = Page::all();
+
+		return Inertia::render('admin/menus/Index', ['menus' => $menus, 'pages' => $pages]);
     }
 
     /**
@@ -54,7 +57,8 @@ class AdminMenuController extends Controller
      */
     public function show($id)
     {
-        //
+		$menu = Menu::where('id', $id)->firstOrFail();
+		return $menu;
     }
 
     /**
@@ -91,3 +95,4 @@ class AdminMenuController extends Controller
         //
     }
 }
+
