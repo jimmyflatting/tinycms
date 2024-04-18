@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminMediaController;
+use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\AdminPagesController;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\AdminSettingsController;
@@ -72,6 +74,17 @@ Route::prefix('admin/staff')->middleware(['auth', 'verified'])->group(function (
 Route::prefix('admin/settings')->middleware(['auth', 'verified'])->group(function () {
 	Route::get('/', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
 	Route::put('/', [AdminSettingsController::class, 'update'])->name('admin.settings.update');
+});
+
+Route::prefix('admin/menus')->middleware(['auth', 'verified'])->group(function () {
+	Route::get('/', [AdminMenuController::class, 'index'])->name('admin.menus.index');
+	Route::put('/', [AdminMenuController::class, 'update'])->name('admin.menus.update');
+});
+
+Route::prefix('admin/media')->middleware(['auth', 'verified'])->group(function () {
+	Route::get('/', [AdminMediaController::class, 'index'])->name('admin.media.index');
+	Route::put('/', [AdminMediaController::class, 'update'])->name('admin.media.update');
+	Route::post('/', [AdminMediaController::class, 'store'])->name('admin.media.store');
 });
 
 Route::get('/{category}/{slug}', [PostController::class, 'show'])->name('post.show');

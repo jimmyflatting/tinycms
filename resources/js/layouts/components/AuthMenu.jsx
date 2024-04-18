@@ -11,6 +11,8 @@ import { FaMoon } from "react-icons/fa6";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { IoChevronBackCircleSharp } from "react-icons/io5";
 import { useState } from "react";
+import { IoMenu } from "react-icons/io5";
+import { MdPermMedia } from "react-icons/md";
 
 export default function AuthMenu() {
     const [expanded, setExpanded] = useState(true);
@@ -30,6 +32,12 @@ export default function AuthMenu() {
                         href="admin.index"
                         icon={<MdDashboard />}
                         tooltip={"Dashboard"}
+                    />
+                    <AuthItem
+                        expanded={expanded}
+                        href="admin.media.index"
+                        icon={<MdPermMedia />}
+                        tooltip={"Media"}
                     />
                     <AuthItem
                         expanded={expanded}
@@ -54,6 +62,12 @@ export default function AuthMenu() {
                         href="admin.users.index"
                         icon={<FaUser />}
                         tooltip={"Användare"}
+                    />
+                    <AuthItem
+                        expanded={expanded}
+                        href="admin.menus.index"
+                        icon={<IoMenu />}
+                        tooltip={"Menyer"}
                     />
                     <AuthItem
                         expanded={expanded}
