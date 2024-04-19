@@ -1,133 +1,188 @@
-import { Select } from "@/components/ui/select";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import SelectMenu from "./SelectMenu";
-import { Button } from "@/components/ui/button";
-import MenuItems from "./MenuItems";
+import React from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import initData from "./initData";
 
-const items = [
-    {
-        id: 1,
-        title: "Startsida",
-        url: "/",
-        children: [],
-    },
-    {
-        id: 2,
-        title: "Tjänster",
-        url: "/tjanster",
-        children: [
-            {
-                id: 3,
-                title: "Historia",
-                url: "/tjanster/historia",
-                children: [],
-            },
-            {
-                id: 4,
-                title: "Säpo",
-                url: "/tjanster/sapo",
-                children: [],
-            },
-        ],
-    },
-    {
-        id: 5,
-        title: "Om oss",
-        url: "/om-oss",
-        children: [
-            {
-                id: 6,
-                title: "Vårt team",
-                url: "/om-oss/team",
-                children: [],
-            },
-            {
-                id: 7,
-                title: "Vår historia",
-                url: "/om-oss/historia",
-                children: [],
-            },
-        ],
-    },
-    {
-        id: 8,
-        title: "Kontakt",
-        url: "/kontakt",
-        children: [],
-    },
-];
+export default function MenuTable() {
+    // let state = initData;
+    const [state, setState] = React.useState(initData);
 
-export default function MenuTable({ menus, pages }) {
-    const [selectedMenu, setSelectedMenu] = useState(1);
-    const [menu, setMenu] = useState(null);
-    const [menuItems, setMenuItems] = useState([]);
+    const onDragEnd = (result) => {
+        // TODO: reordering logic
+        const { destination, source, draggableId } = result;
 
-    console.log(pages);
-    console.log(menus);
+        if (!destination) {
+            return;
+        }
 
-    useEffect(() => {
-        const fetchMenu = (selectedMenu) => {
-            try {
-                fetch(`/api/menu/${selectedMenu}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        setMenu(data);
-                    })
-                    .then(() => {
-                        setMenuItems(menu.menu_items);
-                    });
-            } catch (error) {
-                console.error(error);
-            }
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+
+        // If the item is dropped in the same column
+        if (destination.droppableId === source.droppableId) {
+            const column = state.columns[source.droppableId];
+            const newItems = [...column.itemIds];
+            newItems.splice(source.index, 1);
+            newItems.splice(destination.index, 0, draggableId);
+
+            const newColumn = {
+                ...column,
+                itemIds: newItems,
+            };
+
+            const newState = {
+                ...state,
+                columns: {
+                    ...state.columns,
+                    [newColumn.id]: newColumn,
+                },
+            };
+
+            setState(newState);
+            return;
+        }
+
+        // If the item is dropped in a different column
+        const start = state.columns[source.droppableId];
+        const finish = state.columns[destination.droppableId];
+
+        if (start === finish) {
+            const newItems = [...start.itemIds];
+            newItems.splice(source.index, 1);
+            newItems.splice(destination.index, 0, draggableId);
+
+            const newColumn = {
+                ...start,
+                itemIds: newItems,
+            };
+
+            const newState = {
+                ...state,
+                columns: {
+                    ...state.columns,
+                    [newColumn.id]: newColumn,
+                },
+            };
+
+            setState(newState);
+            return;
+        }
+
+        // Moving from one list to another
+        const startItems = [...start.itemIds];
+        startItems.splice(source.index, 1);
+        const newStart = {
+            ...start,
+            itemIds: startItems,
         };
-        fetchMenu(selectedMenu);
-    }, [selectedMenu]);
 
-    console.log(menu);
-    console.log(menuItems);
+        const finishItems = [...finish.itemIds];
+        finishItems.splice(destination.index, 0, draggableId);
+        const newFinish = {
+            ...finish,
+            itemIds: finishItems,
+        };
+
+        const newState = {
+            ...state,
+            columns: {
+                ...state.columns,
+                [newStart.id]: newStart,
+                [newFinish.id]: newFinish,
+            },
+        };
+
+        setState(newState);
+
+        if (result.combine) {
+            // super simple: just removing the dragging item
+            const items = [...state.items];
+            items.splice(result.source.index, 1);
+            setState({ items });
+            return;
+        }
+
+        const items = [...state.items];
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        setState({ items });
+    };
+
+    console.log(state);
 
     return (
-        <>
-            <SelectMenu menus={menus} />
-            <div className="flex flex-row justify-between space-x-2 my-5">
-                <MenuItems
-                    pages={pages}
-                    menu={menu}
-                    handleChange={console.log("test")}
-                />
+        <DragDropContext onDragEnd={onDragEnd}>
+            <div className="flex flex-row">
+                {state.columnOrder.map((columnId) => {
+                    const column = state.columns[columnId];
+                    const items = column.itemIds.map(
+                        (itemId) => state.items[itemId]
+                    );
 
-                <div className="items border w-full px-2">
-                    <ul>
-                        <li>1 - Startsida</li>
-                        <li>
-                            <>2 - Tjänster</>
-                            <ul className="ps-5">
-                                <li>2.1 - Historia</li>
-                                <li>2.2 - Säpo</li>
-                            </ul>
-                        </li>
-                        <li>3 - Om oss</li>
-                        <li>4 - Kontakt</li>
-                    </ul>
-                </div>
+                    return (
+                        <Column key={column.id} column={column} items={items} />
+                    );
+                })}
             </div>
-            <div className="flex justify-end mb-5">
-                <Button>Spara</Button>
-            </div>
-        </>
+        </DragDropContext>
     );
 }
 
-[
-    {
-        label: "Om oss",
-        url: "/om-oss",
-        children: [
-            { label: "V\u00e5rt team", url: "/om-oss/team" },
-            { label: "V\u00e5r historia", url: "/om-oss/historia" },
-        ],
-    },
-    { label: "Tj\u00e4nster", url: "/tjanster" },
-    { label: "Kontakt", url: "/kontakt" },
-];
+function Column({ column, items }) {
+    return (
+        <div className="flex flex-col w-full p-2">
+            <h2 className="text-lg font-bold underline mb-2">{column.title}</h2>
+            <Droppable droppableId={column.id} isCombineEnabled>
+                {(provided, snapshot) => (
+                    <div
+                        className={`p-2 border rounded-md ${
+                            snapshot.isDraggingOver ? "bg-gray-100" : "bg-white"
+                        }`}
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                    >
+                        {items.map((item, index) => (
+                            <React.Fragment key={item.id}>
+                                <Item item={item} index={index} />
+                                {item.children.length > 0 &&
+                                    item.children.map((child, index) => (
+                                        <Item
+                                            index={index}
+                                            key={child.id}
+                                            item={child}
+                                            className="ms-10"
+                                        />
+                                    ))}
+                            </React.Fragment>
+                        ))}
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
+        </div>
+    );
+}
+
+function Item({ item, className = "", index }) {
+    return (
+        <Draggable draggableId={item.id} index={index}>
+            {(provided, snapshot) => (
+                <div
+                    className={`p-2 border rounded-md mb-2 last:mb-0 bg-white ${className} ${
+                        snapshot.isDragging ? " shadow-xl" : ""
+                    }`}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                >
+                    {index + 1}
+                    {" - "}
+                    {item.content.name}
+                </div>
+            )}
+        </Draggable>
+    );
+}
