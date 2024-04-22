@@ -26,7 +26,7 @@ export default function HeroOne({ props }) {
                         placeholder="Email"
                     />
                     <button className="bg-black text-white px-5 rounded-lg py-2">
-                        Submit
+                        Skicka
                     </button>
                 </div>
                 <div className="">

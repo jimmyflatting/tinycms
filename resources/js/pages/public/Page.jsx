@@ -1,7 +1,7 @@
 import Guest from "@/layouts/Guest";
 import React from "react";
-import SliderComponent from "@/components/block/SliderComponent";
-import TextComponent from "@/components/block/TextComponent";
+// import SliderComponent from "@/components/block/SliderComponent";
+// import TextComponent from "@/components/block/TextComponent";
 
 export default function Page({ ...props }) {
     let content = JSON.parse(props.page.content);
@@ -24,9 +24,9 @@ export default function Page({ ...props }) {
             <Guest>
                 <h1 className="font-bold">{props.page.title}</h1>
                 <div>
-                    {content.map((block, index) => (
+                    {/* {content.map((block, index) => (
                         <div key={index}>{renderBlockComponent(block)}</div>
-                    ))}
+                    ))} */}
                 </div>
             </Guest>
         </>

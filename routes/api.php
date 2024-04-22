@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\GoogleAnalyticsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PostController;
 
@@ -44,3 +45,5 @@ Route::get('/menu/{id}', [AdminMenuController::class, 'show']);
 
 Route::post('/upload', [UploadController::class, 'upload']);
 Route::post('/remove-image', [UploadController::class, 'removeImage']);
+
+Route::get('/media', [MediaController::class, 'index']);

@@ -7,8 +7,33 @@ export default function MenuTable() {
     const [state, setState] = React.useState(initData);
 
     const onDragEnd = (result) => {
-        // TODO: reordering logic
         const { destination, source, draggableId } = result;
+
+        if (result.combine) {
+            console.log(result.combine);
+            const {
+                draggableId: combinedId,
+                droppableId: combinedDroppableId,
+            } = result.combine;
+            const combinedItem = state.items[combinedId];
+            const droppedItem = state.items[draggableId];
+
+            const updatedItems = state.items.map((item) => {
+                if (item.id === combinedItem.id) {
+                    return {
+                        ...item,
+                        children: [...item.children, droppedItem],
+                    };
+                }
+                return item;
+            });
+
+            setState((prevState) => ({
+                ...prevState,
+                items: updatedItems,
+            }));
+            return;
+        }
 
         if (!destination) {
             return;
@@ -97,14 +122,6 @@ export default function MenuTable() {
 
         setState(newState);
 
-        if (result.combine) {
-            // super simple: just removing the dragging item
-            const items = [...state.items];
-            items.splice(result.source.index, 1);
-            setState({ items });
-            return;
-        }
-
         const items = [...state.items];
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
@@ -114,20 +131,27 @@ export default function MenuTable() {
     console.log(state);
 
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <div className="flex flex-row">
-                {state.columnOrder.map((columnId) => {
-                    const column = state.columns[columnId];
-                    const items = column.itemIds.map(
-                        (itemId) => state.items[itemId]
-                    );
+        <>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <div className="flex flex-row">
+                    {state.columnOrder.map((columnId) => {
+                        const column = state.columns[columnId];
+                        const items = column.itemIds.map(
+                            (itemId) => state.items[itemId]
+                        );
 
-                    return (
-                        <Column key={column.id} column={column} items={items} />
-                    );
-                })}
-            </div>
-        </DragDropContext>
+                        return (
+                            <Column
+                                key={column.id}
+                                column={column}
+                                items={items}
+                            />
+                        );
+                    })}
+                </div>
+            </DragDropContext>
+            <PreviewMenu state={state} />
+        </>
     );
 }
 
@@ -138,7 +162,7 @@ function Column({ column, items }) {
             <Droppable droppableId={column.id} isCombineEnabled>
                 {(provided, snapshot) => (
                     <div
-                        className={`p-2 border rounded-md ${
+                        className={`p-2 border rounded-md transition-all ${
                             snapshot.isDraggingOver ? "bg-gray-100" : "bg-white"
                         }`}
                         {...provided.droppableProps}
@@ -184,5 +208,17 @@ function Item({ item, className = "", index }) {
                 </div>
             )}
         </Draggable>
+    );
+}
+
+function PreviewMenu(state) {
+    console.log(state);
+    return (
+        <div className="mt-10">
+            <h2 className="text-lg font-bold underline mb-2">
+                Förhandsvisning
+            </h2>
+            <div className="p-2 border rounded-md">Test</div>
+        </div>
     );
 }
