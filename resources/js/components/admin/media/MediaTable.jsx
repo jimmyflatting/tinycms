@@ -47,7 +47,7 @@ export default function MediaTable() {
                 toast({
                     title: "Mediafilen har raderats",
                     description: "Mediafilen har raderats",
-                    status: "success",
+                    variant: "success",
                 });
             })
             .catch((error) => {
@@ -55,7 +55,7 @@ export default function MediaTable() {
                     title: "Något gick snett",
                     description:
                         "Det gick inte att radera mediafilen. Försök igen.",
-                    status: "failure",
+                    variant: "destructive",
                 });
                 console.error("Error deleting media:", error);
             });
